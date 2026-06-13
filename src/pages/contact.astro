@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="CONTACT" description="OPOTOへのお問い合わせはこちらから。">
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <span class="font-heading-en text-sm tracking-widest text-muted">CONTACT</span>
+    <h1 class="font-heading-ja text-3xl md:text-5xl leading-tight tracking-tight mt-4 mb-8">
+      お問い合わせ。
+    </h1>
+    <p class="text-muted leading-relaxed max-w-2xl">
+      撮影のご相談・ご予約、ギャラリーのご利用、その他お問い合わせは、以下のフォームからお送りください。
+    </p>
+  </section>
+
+  <!-- FORM -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="max-w-xl space-y-8">
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="hidden">
+        <label>Don't fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <div>
+        <label for="name" class="block font-heading-en text-sm tracking-wide text-muted mb-2">NAME</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          class="w-full border border-line bg-base px-4 py-3 focus:outline-none focus:border-ink transition-colors"
+        />
+      </div>
+
+      <div>
+        <label for="email" class="block font-heading-en text-sm tracking-wide text-muted mb-2">EMAIL</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="w-full border border-line bg-base px-4 py-3 focus:outline-none focus:border-ink transition-colors"
+        />
+      </div>
+
+      <div>
+        <label for="category" class="block font-heading-en text-sm tracking-wide text-muted mb-2">CATEGORY</label>
+        <select
+          id="category"
+          name="category"
+          class="w-full border border-line bg-base px-4 py-3 focus:outline-none focus:border-ink transition-colors"
+        >
+          <option>STUDIO(撮影について)</option>
+          <option>GALLERY(ギャラリーについて)</option>
+          <option>その他</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="message" class="block font-heading-en text-sm tracking-wide text-muted mb-2">MESSAGE</label>
+        <textarea
+          id="message"
+          name="message"
+          rows="6"
+          required
+          class="w-full border border-line bg-base px-4 py-3 focus:outline-none focus:border-ink transition-colors"
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="inline-flex items-center gap-2 font-heading-en tracking-wide border border-line px-8 py-3 hover:bg-surface transition-colors"
+      >
+        SEND &rarr;
+      </button>
+    </form>
+  </section>
+</Layout>

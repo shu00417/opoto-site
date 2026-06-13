@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const menu = [
+  {
+    title: '成人式 前撮り撮影',
+    text: '振袖・袴姿での前撮り。スタジオでもロケーションでも、その日だけの表情を残します。',
+  },
+  {
+    title: '家族写真・お子様の記念撮影',
+    text: '七五三やお誕生日、家族の節目を自然な雰囲気で撮影します。',
+  },
+  {
+    title: 'マタニティ・ニューボーン',
+    text: '生まれてくる前と、生まれたばかりの今。かけがえのない時間を写真に残します。',
+  },
+  {
+    title: 'その他 記念撮影',
+    text: '卒業・卒園、誕生日、ペットとの写真など、ご相談に応じて撮影いたします。',
+  },
+];
+
+const flow = [
+  { step: '01', title: 'お問い合わせ', text: 'ご希望の撮影内容や日程について、お気軽にご連絡ください。' },
+  { step: '02', title: 'ご相談・ご予約', text: '内容やイメージをすり合わせ、撮影日を確定します。' },
+  { step: '03', title: '撮影', text: 'スタジオまたはロケーションにて撮影を行います。' },
+  { step: '04', title: 'お渡し', text: 'データやプリントをお渡しします。' },
+];
+---
+
+<Layout title="STUDIO" description="OPOTOのスタジオ事業。成人式の前撮りから家族写真まで、自然な表情を残す撮影サービスです。">
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <span class="font-heading-en text-sm tracking-widest text-muted">STUDIO</span>
+    <h1 class="font-heading-ja text-3xl md:text-5xl leading-tight tracking-tight mt-4 mb-8">
+      大切な日を、<br class="md:hidden" />自然な表情で。
+    </h1>
+    <p class="text-muted leading-relaxed max-w-2xl">
+      成人式の前撮りから家族写真まで。一人ひとりの「今」を、丁寧な対話と自然光を活かした撮影で残します。スタジオでもロケーションでも、その人らしい一枚を。
+    </p>
+  </section>
+
+  <!-- MENU -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-10">MENU</h2>
+    <div class="grid md:grid-cols-2 gap-px bg-line border border-line">
+      {menu.map((item) => (
+        <div class="bg-base p-8 md:p-10">
+          <h3 class="font-heading-ja text-xl mb-3">{item.title}</h3>
+          <p class="text-muted leading-relaxed text-sm">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FLOW -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-10">FLOW</h2>
+    <div class="grid md:grid-cols-4 gap-8">
+      {flow.map((item) => (
+        <div>
+          <span class="font-heading-en text-3xl text-muted">{item.step}</span>
+          <h3 class="font-heading-ja text-lg mt-3 mb-2">{item.title}</h3>
+          <p class="text-muted leading-relaxed text-sm">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line text-center">
+    <p class="text-muted mb-6">
+      撮影プランや料金については、お気軽にお問い合わせください。
+    </p>
+    <a
+      href="/contact"
+      class="inline-flex items-center gap-2 font-heading-en tracking-wide border border-line px-8 py-3 hover:bg-surface transition-colors"
+    >
+      CONTACT &rarr;
+    </a>
+  </section>
+</Layout>

@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const services = [
+  {
+    title: '貸しギャラリー',
+    text: '個展やグループ展、ワークショップなど、写真を中心とした活動のための展示スペースをお貸しします。',
+  },
+  {
+    title: 'プリントサービス',
+    text: 'データを高品質な写真プリントに。展示用の作品づくりから、普段の一枚まで対応します。',
+  },
+];
+
+const scenes = [
+  '写真展・個展・グループ展',
+  'ワークショップ・写真教室',
+  '作品のプリント・ポートフォリオ制作',
+  'その他、写真にまつわる活動全般',
+];
+---
+
+<Layout title="GALLERY" description="OPOTOのギャラリー事業。貸しギャラリーとプリントサービスを通じて、写真活動を行うすべての人の拠点を目指しています。">
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <span class="font-heading-en text-sm tracking-widest text-muted">GALLERY</span>
+    <h1 class="font-heading-ja text-3xl md:text-5xl leading-tight tracking-tight mt-4 mb-8">
+      その一歩を、<br class="md:hidden" />ここから。
+    </h1>
+    <p class="text-muted leading-relaxed max-w-2xl">
+      貸しギャラリーと写真のプリントサービスを通じて、写真活動を行うすべての人の活動拠点を目指しています。発表の場を探している方も、作品を形にしたい方も、まずはお気軽にご相談ください。
+    </p>
+  </section>
+
+  <!-- SERVICE -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-10">SERVICE</h2>
+    <div class="grid md:grid-cols-2 gap-px bg-line border border-line">
+      {services.map((item) => (
+        <div class="bg-base p-8 md:p-10">
+          <h3 class="font-heading-ja text-xl mb-3">{item.title}</h3>
+          <p class="text-muted leading-relaxed text-sm">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- SCENE -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-10">SCENE</h2>
+    <p class="text-muted leading-relaxed mb-8 max-w-2xl">
+      こんな活動の場としてご利用いただけます。
+    </p>
+    <ul class="grid md:grid-cols-2 gap-4">
+      {scenes.map((scene) => (
+        <li class="flex items-start gap-3 text-sm">
+          <span class="font-heading-en text-muted">―</span>
+          <span>{scene}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line text-center">
+    <p class="text-muted mb-6">
+      利用方法や空き状況については、お気軽にお問い合わせください。
+    </p>
+    <a
+      href="/contact"
+      class="inline-flex items-center gap-2 font-heading-en tracking-wide border border-line px-8 py-3 hover:bg-surface transition-colors"
+    >
+      CONTACT &rarr;
+    </a>
+  </section>
+</Layout>

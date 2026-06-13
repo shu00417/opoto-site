@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const info = [
+  { label: '店舗名', value: 'Photo and Culture OPOTO' },
+  { label: '住所', value: '〒680-0036 鳥取県鳥取市川端1丁目119 裏側入口2階' },
+  { label: '営業時間', value: '11:00〜19:00(展示最終日は17:00 close)' },
+  { label: '定休日', value: '月曜(展示会期間中は月・火・水が休廊)' },
+];
+---
+
+<Layout title="ACCESS" description="OPOTOへのアクセス・営業時間のご案内です。">
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <span class="font-heading-en text-sm tracking-widest text-muted">ACCESS</span>
+    <h1 class="font-heading-ja text-3xl md:text-5xl leading-tight tracking-tight mt-4 mb-8">
+      アクセス・<br class="md:hidden" />営業時間。
+    </h1>
+    <p class="text-muted leading-relaxed max-w-2xl">
+      ご来店の際は、以下の情報をご確認ください。
+    </p>
+  </section>
+
+  <!-- INFO -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+    <dl class="max-w-xl divide-y divide-line border-t border-line">
+      {info.map((item) => (
+        <div class="grid grid-cols-3 py-4 gap-4">
+          <dt class="font-heading-en text-sm tracking-wide text-muted">{item.label}</dt>
+          <dd class="col-span-2 text-sm">{item.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <!-- MAP -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-10">MAP</h2>
+    <div class="aspect-[16/9] bg-surface border border-line flex items-center justify-center text-muted text-sm">
+      MAP(準備中)
+    </div>
+  </section>
+</Layout>

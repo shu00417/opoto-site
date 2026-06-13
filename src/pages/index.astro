@@ -1,17 +1,95 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
+const works = (await getCollection('works'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="ホーム">
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 py-24 md:py-36 text-center">
+    <h1 class="font-heading-ja text-3xl md:text-5xl leading-tight tracking-tight">
+      日常の中に、<br class="md:hidden" />小さなきっかけを。
+    </h1>
+    <p class="mt-6 font-heading-en tracking-wide text-sm md:text-base text-muted">
+      OPOTO = Opportunity &times; Photography
+    </p>
+    <p class="mt-2 text-muted max-w-xl mx-auto">
+      写真と出会う場所から、新しい一歩が始まります。
+    </p>
+  </section>
+
+  <!-- 2事業への導線 -->
+  <section class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-px bg-line border border-line">
+    <a
+      href="/studio"
+      class="group bg-base p-12 flex flex-col justify-between min-h-[320px] md:min-h-[360px] hover:bg-surface transition-colors"
+    >
+      <span class="font-heading-en text-sm tracking-widest text-muted">STUDIO</span>
+      <div>
+        <h2 class="font-heading-ja text-2xl md:text-3xl mb-4">大切な日を、自然な表情で。</h2>
+        <span class="inline-flex items-center gap-2 text-sm font-heading-en group-hover:gap-3 transition-all">
+          VIEW MORE &rarr;
+        </span>
+      </div>
+    </a>
+    <a
+      href="/gallery"
+      class="group bg-base p-12 flex flex-col justify-between min-h-[320px] md:min-h-[360px] hover:bg-surface transition-colors"
+    >
+      <span class="font-heading-en text-sm tracking-widest text-muted">GALLERY</span>
+      <div>
+        <h2 class="font-heading-ja text-2xl md:text-3xl mb-4">その一歩を、ここから。</h2>
+        <span class="inline-flex items-center gap-2 text-sm font-heading-en group-hover:gap-3 transition-all">
+          VIEW MORE &rarr;
+        </span>
+      </div>
+    </a>
+  </section>
+
+  <!-- WORKS -->
+  <section class="max-w-6xl mx-auto px-6 py-24">
+    <div class="flex items-end justify-between mb-8">
+      <h2 class="font-heading-en text-2xl tracking-wide">WORKS</h2>
+      <a href="/works" class="text-sm font-heading-en text-muted hover:text-ink transition-colors">VIEW ALL &rarr;</a>
+    </div>
+    <p class="text-muted mb-8">OPOTOがこれまで関わってきた、撮影や展示の記録です。</p>
+    {works.length > 0 ? (
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {works.map((item) => (
+          <div class="aspect-[4/5] bg-surface border border-line overflow-hidden">
+            <img
+              src={item.data.image}
+              alt={item.data.title}
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {Array.from({ length: 4 }).map(() => (
+          <div class="aspect-[4/5] bg-surface border border-line flex items-center justify-center text-muted text-xs">
+            Photo
+          </div>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <!-- ABOUT -->
+  <section class="max-w-6xl mx-auto px-6 py-24 border-t border-line">
+    <div class="max-w-2xl">
+      <h2 class="font-heading-ja text-2xl md:text-3xl mb-6">写真と文化が交わる場所。</h2>
+      <p class="text-muted leading-relaxed mb-6">
+        OPOTO = Opportunity &times; Photography。「日常の中に小さなきっかけを」を合言葉に、鳥取市川端で撮影スタジオとギャラリーを運営しています。
+      </p>
+      <a href="/about" class="inline-flex items-center gap-2 text-sm font-heading-en hover:gap-3 transition-all">
+        ABOUT OPOTO &rarr;
+      </a>
+    </div>
+  </section>
+</Layout>

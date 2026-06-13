@@ -1,0 +1,86 @@
+---
+import '../styles/global.css';
+import { Image } from 'astro:assets';
+import opotoMark from '../assets/opoto-mark.png';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Photo and Culture OPOTO' } = Astro.props;
+
+const navItems = [
+  { href: '/studio', label: 'STUDIO' },
+  { href: '/gallery', label: 'GALLERY' },
+  { href: '/works', label: 'WORKS' },
+  { href: '/about', label: 'ABOUT' },
+  { href: '/access', label: 'ACCESS' },
+  { href: '/contact', label: 'CONTACT' },
+];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title} | OPOTO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-base text-ink font-body antialiased">
+    <header class="border-b border-line sticky top-0 z-50 bg-base/90 backdrop-blur-sm">
+      <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-5">
+        <a href="/" class="flex items-center gap-3">
+          <Image src={opotoMark} alt="" class="h-7 md:h-8 w-auto" />
+          <span class="font-heading-en leading-tight">
+            <span class="text-2xl tracking-wide">OPOTO</span>
+            <span class="block text-[10px] font-body tracking-[0.2em] text-muted">PHOTO &amp; CULTURE</span>
+          </span>
+        </a>
+        <nav class="hidden md:flex gap-8 text-sm font-heading-en tracking-wide">
+          {navItems.map((item) => (
+            <a href={item.href} class="hover:text-muted transition-colors">{item.label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="border-t border-line mt-24">
+      <div class="max-w-6xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-3 text-sm">
+        <div>
+          <p class="font-heading-en text-lg mb-2">OPOTO</p>
+          <p class="text-muted">Photo and Culture OPOTO</p>
+          <p class="text-muted">鳥取県鳥取市川端</p>
+        </div>
+        <div>
+          <p class="font-heading-en mb-2 tracking-wide">LINKS</p>
+          <ul class="space-y-1">
+            <li><a href="https://www.instagram.com/opoto_photostudio/" target="_blank" rel="noopener" class="hover:text-muted">Instagram (Studio)</a></li>
+            <li><a href="https://www.instagram.com/opoto_gallery/" target="_blank" rel="noopener" class="hover:text-muted">Instagram (Gallery)</a></li>
+            <li><a href="#" target="_blank" rel="noopener" class="hover:text-muted">Online Shop (BASE)</a></li>
+            <li><a href="https://note.com/opoto_tottori" target="_blank" rel="noopener" class="hover:text-muted">note</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-heading-en mb-2 tracking-wide">ACCESS</p>
+          <p class="text-muted">営業時間: 11:00〜19:00</p>
+          <p class="text-muted">定休日: 月曜(展示会期間中は月・火・水)</p>
+        </div>
+      </div>
+      <div class="text-center text-xs text-muted pb-6">&copy; OPOTO</div>
+    </footer>
+  </body>
+</html>

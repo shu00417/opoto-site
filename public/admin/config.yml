@@ -1,0 +1,27 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "works"
+    label: "実績 (WORKS)"
+    label_singular: "実績"
+    folder: "src/content/works"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "タイトル", name: "title", widget: "string" }
+      - label: "カテゴリ"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "STUDIO", value: "studio" }
+          - { label: "GALLERY", value: "gallery" }
+          - { label: "その他", value: "other" }
+        default: "other"
+      - { label: "日付", name: "date", widget: "datetime" }
+      - { label: "画像", name: "image", widget: "image" }
+      - { label: "説明", name: "description", widget: "text", required: false }
