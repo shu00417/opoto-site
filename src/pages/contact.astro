@@ -74,3 +74,9 @@ import Layout from '../layouts/Layout.astro';
     </form>
   </section>
 </Layout>
+
+<script>
+  window.addEventListener('pageshow', () => {
+    (document.querySelector('form') as HTMLFormElement)?.reset();
+  });
+</script>
