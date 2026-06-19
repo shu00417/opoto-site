@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
 import { Image } from 'astro:assets';
-import opotoMark from '../assets/opoto-mark.png';
+import opotoLogo from '../assets/opoto-logo-horizontal.png';
+import Lightbox from '../components/Lightbox.astro';
 
 interface Props {
   title: string;
@@ -32,55 +33,159 @@ const navItems = [
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Zen+Old+Mincho:wght@400;500;700&family=Jost:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
   </head>
   <body class="bg-base text-ink font-body antialiased">
-    <header class="border-b border-line sticky top-0 z-50 bg-base/90 backdrop-blur-sm">
+    <div
+      id="mobile-menu-backdrop"
+      class="fixed inset-0 z-40 hidden bg-ink/30 md:hidden"
+      aria-hidden="true"
+    ></div>
+
+    <header class="sticky top-0 z-50 relative border-b border-line bg-base/90 backdrop-blur-sm">
       <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-5">
-        <a href="/" class="flex items-center gap-3">
-          <Image src={opotoMark} alt="" class="h-7 md:h-8 w-auto" />
-          <span class="font-heading-en leading-tight">
-            <span class="text-2xl tracking-wide">OPOTO</span>
-            <span class="block text-[10px] font-body tracking-[0.2em] text-muted">PHOTO &amp; CULTURE</span>
-          </span>
+        <a href="/" class="relative z-50 flex items-center">
+          <Image src={opotoLogo} alt="Photo and Culture OPOTO" class="h-7 md:h-8 w-auto" />
         </a>
         <nav class="hidden md:flex gap-8 text-sm font-heading-en tracking-wide">
           {navItems.map((item) => (
             <a href={item.href} class="hover:text-muted transition-colors">{item.label}</a>
           ))}
         </nav>
+        <button
+          type="button"
+          id="mobile-menu-toggle"
+          class="relative z-50 md:hidden flex h-10 w-10 items-center justify-center -mr-2 rounded-full hover:bg-surface transition-colors"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="メニューを開く"
+        >
+          <svg id="mobile-menu-icon-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+          <svg id="mobile-menu-icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="hidden h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="absolute inset-x-0 top-full hidden md:hidden border-t border-line bg-base shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
+        aria-hidden="true"
+      >
+        <nav class="max-w-6xl mx-auto px-6 py-3">
+          {navItems.map((item, i) => (
+            <a
+              href={item.href}
+              class:list={[
+                'block py-4 text-lg font-heading-en tracking-wide transition-colors active:bg-surface',
+                i < navItems.length - 1 && 'border-b border-line',
+              ]}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
       </div>
     </header>
+
+    <script>
+      const toggle = document.getElementById('mobile-menu-toggle');
+      const menu = document.getElementById('mobile-menu');
+      const backdrop = document.getElementById('mobile-menu-backdrop');
+      const iconOpen = document.getElementById('mobile-menu-icon-open');
+      const iconClose = document.getElementById('mobile-menu-icon-close');
+      let isOpen = false;
+
+      const setOpen = (open: boolean) => {
+        if (!toggle || !menu) return;
+        isOpen = open;
+        menu.classList.toggle('hidden', !open);
+        menu.classList.toggle('block', open);
+        backdrop?.classList.toggle('hidden', !open);
+        menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+        backdrop?.setAttribute('aria-hidden', open ? 'false' : 'true');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+        iconOpen?.classList.toggle('hidden', open);
+        iconClose?.classList.toggle('hidden', !open);
+        document.body.classList.toggle('overflow-hidden', open);
+      };
+
+      toggle?.addEventListener('click', () => setOpen(!isOpen));
+      backdrop?.addEventListener('click', () => setOpen(false));
+      menu?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setOpen(false));
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) setOpen(false);
+      });
+    </script>
 
     <main>
       <slot />
     </main>
 
     <footer class="border-t border-line mt-24">
-      <div class="max-w-6xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-3 text-sm">
+      <div class="max-w-6xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-2 text-sm">
         <div>
-          <p class="font-heading-en text-lg mb-2">OPOTO</p>
-          <p class="text-muted">Photo and Culture OPOTO</p>
-          <p class="text-muted">鳥取県鳥取市川端</p>
+          <p class="font-logo text-lg mb-2">Photo and Culture OPOTO</p>
+          <p class="text-muted mt-2">〒680-0036</p>
+          <p class="text-muted">鳥取県鳥取市川端1丁目119　裏側入口2階</p>
+          <p class="text-muted mt-4">営業時間　11:00〜19:00</p>
+          <p class="text-muted">定休日　月・火・水(展示会期間中は月のみ休廊)</p>
         </div>
         <div>
           <p class="font-heading-en mb-2 tracking-wide">LINKS</p>
-          <ul class="space-y-1">
-            <li><a href="https://www.instagram.com/opoto_photostudio/" target="_blank" rel="noopener" class="hover:text-muted">Instagram (Studio)</a></li>
-            <li><a href="https://www.instagram.com/opoto_gallery/" target="_blank" rel="noopener" class="hover:text-muted">Instagram (Gallery)</a></li>
-            <li><a href="#" target="_blank" rel="noopener" class="hover:text-muted">Online Shop (BASE)</a></li>
-            <li><a href="https://note.com/opoto_tottori" target="_blank" rel="noopener" class="hover:text-muted">note</a></li>
+          <ul class="grid grid-cols-2 gap-x-6 gap-y-2">
+            <li>
+              <a href="https://www.instagram.com/opoto_photostudio/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-muted transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-4 w-4 flex-shrink-0">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+                </svg>
+                Instagram (Studio)
+              </a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/opoto_gallery/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-muted transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-4 w-4 flex-shrink-0">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+                </svg>
+                Instagram (Gallery)
+              </a>
+            </li>
+            <li>
+              <a href="https://opotogallery.base.shop/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-muted transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-4 w-4 flex-shrink-0">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.5 8h11l1 12h-13l1-12z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 8a3 3 0 016 0" />
+                </svg>
+                Online Shop (BASE)
+              </a>
+            </li>
+            <li>
+              <a href="https://note.com/opoto_tottori" target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-muted transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-4 w-4 flex-shrink-0">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 4.5A1.5 1.5 0 016.5 3H14l5 5v11.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 19.5v-15z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 3v5h5" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.5 12.5h7M8.5 16h7" />
+                </svg>
+                note
+              </a>
+            </li>
           </ul>
         </div>
-        <div>
-          <p class="font-heading-en mb-2 tracking-wide">ACCESS</p>
-          <p class="text-muted">営業時間: 11:00〜19:00</p>
-          <p class="text-muted">定休日: 月曜(展示会期間中は月・火・水)</p>
-        </div>
       </div>
-      <div class="text-center text-xs text-muted pb-6">&copy; OPOTO</div>
+      <div class="text-center text-xs text-muted pb-6">&copy; Photo and Culture OPOTO</div>
     </footer>
+
+    <Lightbox />
   </body>
 </html>

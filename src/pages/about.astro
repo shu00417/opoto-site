@@ -1,42 +1,41 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import aboutConcept from '../assets/photos/about-concept.jpg';
 ---
 
 <Layout title="ABOUT" description="OPOTOについて。Opportunity × Photography、日常の中に小さなきっかけを。">
   <!-- Hero -->
-  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
-    <span class="font-heading-en text-sm tracking-widest text-muted">ABOUT</span>
-    <h1 class="font-heading-ja text-3xl md:text-5xl leading-tight tracking-tight mt-4 mb-8">
-      写真と文化が、<br class="md:hidden" />交わる場所。
-    </h1>
-    <p class="text-muted leading-relaxed max-w-2xl">
-      OPOTOは、鳥取県鳥取市川端で写真のスタジオとギャラリーを運営しています。
-    </p>
-  </section>
-
-  <!-- CONCEPT -->
-  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
-    <h2 class="font-heading-en text-2xl tracking-wide mb-10">CONCEPT</h2>
-    <div class="max-w-2xl space-y-6 text-muted leading-relaxed">
-      <p>
-        OPOTOという名前には、「Opportunity(きっかけ・機会)」と「Photography(写真)」という二つの言葉を重ねています。カメラを構えるという小さな行為が、誰かにとっての新しい一歩につながる。そんな場所であればと考え、この場所を運営しています。
-      </p>
-      <p class="font-heading-en tracking-wide text-ink">
-        OPOTO = Opportunity &times; Photography
-      </p>
-      <p>
-        「日常の中に小さなきっかけを」を合言葉に、成人式や家族写真のような特別な日の記録から、写真を通じた発表や発見の場づくりまで。写真にまつわるさまざまな活動を、ここから後押ししていきます。
-      </p>
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+    <div>
+      <span class="font-heading-en text-sm tracking-widest text-muted">ABOUT</span>
+      <h1 class="font-heading-ja text-xl md:text-3xl leading-tight tracking-tight mt-4 mb-8">
+        OPOTOという名前に込めた想い。
+      </h1>
+      <div class="space-y-5 text-muted leading-relaxed">
+        <p>
+          OPOTOという名前には、「Opportunity(きっかけ・機会)」と「Photography(写真)」という二つの言葉を重ねています。写真に残すという小さな行為が、誰かにとっての新しい一歩につながる。そんな場所であればと考え、この場所を運営しています。
+        </p>
+        <p class="font-heading-en tracking-wide text-ink">
+          OPOTO = Opportunity &times; Photography
+        </p>
+        <p>
+          「日常の中に小さなきっかけを」を合言葉に、成人式や家族写真のような特別な日の記録から、写真を通じた発表や発見の場づくりまで。写真にまつわるさまざまな活動を、ここから後押ししていきます。
+        </p>
+      </div>
+    </div>
+    <div class="aspect-[4/5] overflow-hidden">
+      <Image src={aboutConcept} alt="" class="w-full h-full object-cover" />
     </div>
   </section>
 
   <!-- BUSINESS -->
-  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
     <h2 class="font-heading-en text-2xl tracking-wide mb-10">BUSINESS</h2>
     <div class="grid md:grid-cols-2 gap-px bg-line border border-line">
       <a href="/studio" class="group bg-base p-8 md:p-10 hover:bg-surface transition-colors">
         <span class="font-heading-en text-sm tracking-widest text-muted">STUDIO</span>
-        <h3 class="font-heading-ja text-xl mt-3 mb-3">大切な日を、自然な表情で。</h3>
+        <h3 class="font-heading-ja text-xl mt-3 mb-3">特別な日も、そうじゃない日も。</h3>
         <p class="text-muted leading-relaxed text-sm mb-4">
           成人式の前撮りから家族写真まで。一人ひとりの「今」を残す撮影サービスです。
         </p>

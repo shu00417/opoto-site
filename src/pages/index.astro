@@ -1,92 +1,218 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import topBand1 from '../assets/photos/slide-1.jpg';
+import topBand2 from '../assets/photos/slide-2.jpg';
+import topBand3 from '../assets/photos/slide-3.jpg';
+import topBand4 from '../assets/photos/slide-4.jpg';
+import studioCard from '../assets/photos/studio-card.jpg';
+import galleryCard from '../assets/photos/gallery-card.jpg';
 
-const works = (await getCollection('works'))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 4);
+const worksGlob = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/photos/service_work/**',
+  { eager: true }
+);
+const worksImages = Object.entries(worksGlob)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, m]) => m.default);
 ---
 
 <Layout title="ホーム">
+  <!-- HERO IMAGE -->
+  <section class="px-6 mt-6 md:mt-8">
+    <div id="hero-slideshow" class="relative max-w-6xl mx-auto aspect-[16/9] overflow-hidden group">
+      <Image src={topBand1} alt="" width={1200} quality={85} class="hero-slide absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-1000" />
+      <Image src={topBand4} alt="" width={1200} quality={85} class="hero-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
+      <Image src={topBand2} alt="" width={1200} quality={85} class="hero-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
+      <Image src={topBand3} alt="" width={1200} quality={85} class="hero-slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" />
+
+      <button
+        type="button"
+        data-prev
+        aria-label="前の画像"
+        class="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-base/70 text-ink opacity-70 hover:opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-5 w-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        data-next
+        aria-label="次の画像"
+        class="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-base/70 text-ink opacity-70 hover:opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-5 w-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        <span class="hero-dot h-1.5 w-6 rounded-full bg-base transition-opacity duration-300 opacity-100"></span>
+        <span class="hero-dot h-1.5 w-6 rounded-full bg-base transition-opacity duration-300 opacity-40"></span>
+        <span class="hero-dot h-1.5 w-6 rounded-full bg-base transition-opacity duration-300 opacity-40"></span>
+        <span class="hero-dot h-1.5 w-6 rounded-full bg-base transition-opacity duration-300 opacity-40"></span>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const root = document.getElementById('hero-slideshow');
+    if (root) {
+      const slides = Array.from(root.querySelectorAll<HTMLElement>('.hero-slide'));
+      const dots = Array.from(root.querySelectorAll<HTMLElement>('.hero-dot'));
+      let index = 0;
+      let timer: ReturnType<typeof setInterval>;
+
+      const show = (i: number) => {
+        slides.forEach((slide, idx) => {
+          slide.classList.toggle('opacity-100', idx === i);
+          slide.classList.toggle('opacity-0', idx !== i);
+        });
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('opacity-100', idx === i);
+          dot.classList.toggle('opacity-40', idx !== i);
+        });
+        index = i;
+      };
+
+      const next = () => show((index + 1) % slides.length);
+      const prev = () => show((index - 1 + slides.length) % slides.length);
+
+      const resetAutoplay = () => {
+        clearInterval(timer);
+        timer = setInterval(next, 5000);
+      };
+
+      root.querySelector('[data-next]')?.addEventListener('click', () => {
+        next();
+        resetAutoplay();
+      });
+      root.querySelector('[data-prev]')?.addEventListener('click', () => {
+        prev();
+        resetAutoplay();
+      });
+
+      resetAutoplay();
+    }
+  </script>
+
   <!-- Hero -->
-  <section class="max-w-6xl mx-auto px-6 py-24 md:py-36 text-center">
-    <h1 class="font-heading-ja text-3xl md:text-5xl leading-tight tracking-tight">
-      日常の中に、<br class="md:hidden" />小さなきっかけを。
-    </h1>
-    <p class="mt-6 font-heading-en tracking-wide text-sm md:text-base text-muted">
-      OPOTO = Opportunity &times; Photography
-    </p>
-    <p class="mt-2 text-muted max-w-xl mx-auto">
-      写真と出会う場所から、新しい一歩が始まります。
-    </p>
+  <section class="max-w-6xl mx-auto px-6 pt-24 md:pt-36 pb-12 md:pb-16 text-center">
+    <div class="max-w-2xl mx-auto space-y-4 text-muted leading-relaxed">
+      <p>OPOTOはスタジオとギャラリーを通して、<br />地域の方々が気軽に写真と向き合える場所です。</p>
+      <p>暮らしの中にある写真の楽しさや価値に触れられる、<br class="hidden md:inline" />身近な「写真の入口」でありたいと考えています。</p>
+    </div>
+
+    <ul class="mt-8 max-w-2xl mx-auto space-y-2 text-muted leading-relaxed">
+      <li>写真を始めるきっかけを</li>
+      <li>展示を初めて見るきっかけを</li>
+      <li>誰かの作品に触れるきっかけを</li>
+      <li>家族写真を残すきっかけを</li>
+      <li>街を見つめ直すきっかけを</li>
+    </ul>
+
+    <div class="mt-8">
+      <h1 class="font-heading-ja text-2xl md:text-4xl leading-tight tracking-tight">
+        "日常の中に、小さなきっかけを"
+      </h1>
+
+      <p class="mt-4 text-muted leading-relaxed">これが私たちの合言葉です。</p>
+    </div>
   </section>
 
   <!-- 2事業への導線 -->
-  <section class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-px bg-line border border-line">
+  <section class="max-w-6xl mx-auto px-6 py-24 border-t-[0.5px] border-line">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-8">SERVICE</h2>
+    <div class="grid md:grid-cols-2 gap-px bg-line border border-line">
     <a
       href="/studio"
-      class="group bg-base p-12 flex flex-col justify-between min-h-[320px] md:min-h-[360px] hover:bg-surface transition-colors"
+      class="group relative flex flex-col justify-between min-h-[420px] md:min-h-[480px] p-12 overflow-hidden"
     >
-      <span class="font-heading-en text-sm tracking-widest text-muted">STUDIO</span>
-      <div>
-        <h2 class="font-heading-ja text-2xl md:text-3xl mb-4">大切な日を、自然な表情で。</h2>
-        <span class="inline-flex items-center gap-2 text-sm font-heading-en group-hover:gap-3 transition-all">
+      <Image
+        src={studioCard}
+        alt=""
+        width={800}
+        quality={85}
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+      <div class="absolute inset-0 bg-ink/45 group-hover:bg-ink/35 transition-colors"></div>
+      <span class="relative font-heading-en text-sm tracking-widest text-white">STUDIO</span>
+      <div class="relative">
+        <h2 class="font-heading-ja text-2xl md:text-3xl mb-4 text-white">特別な日も、そうじゃない日も。</h2>
+        <span class="inline-flex items-center gap-2 text-sm font-heading-en text-white group-hover:gap-3 transition-all">
           VIEW MORE &rarr;
         </span>
       </div>
     </a>
     <a
       href="/gallery"
-      class="group bg-base p-12 flex flex-col justify-between min-h-[320px] md:min-h-[360px] hover:bg-surface transition-colors"
+      class="group relative flex flex-col justify-between min-h-[420px] md:min-h-[480px] p-12 overflow-hidden"
     >
-      <span class="font-heading-en text-sm tracking-widest text-muted">GALLERY</span>
-      <div>
-        <h2 class="font-heading-ja text-2xl md:text-3xl mb-4">その一歩を、ここから。</h2>
-        <span class="inline-flex items-center gap-2 text-sm font-heading-en group-hover:gap-3 transition-all">
+      <Image
+        src={galleryCard}
+        alt=""
+        width={800}
+        quality={85}
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+      <div class="absolute inset-0 bg-ink/45 group-hover:bg-ink/35 transition-colors"></div>
+      <span class="relative font-heading-en text-sm tracking-widest text-white">GALLERY</span>
+      <div class="relative">
+        <h2 class="font-heading-ja text-2xl md:text-3xl mb-4 text-white">その一歩を、ここから。</h2>
+        <span class="inline-flex items-center gap-2 text-sm font-heading-en text-white group-hover:gap-3 transition-all">
           VIEW MORE &rarr;
         </span>
       </div>
     </a>
+    </div>
   </section>
 
   <!-- WORKS -->
-  <section class="max-w-6xl mx-auto px-6 py-24">
+  <section class="max-w-6xl mx-auto px-6 py-24 border-t-[0.5px] border-line">
     <div class="flex items-end justify-between mb-8">
       <h2 class="font-heading-en text-2xl tracking-wide">WORKS</h2>
       <a href="/works" class="text-sm font-heading-en text-muted hover:text-ink transition-colors">VIEW ALL &rarr;</a>
     </div>
     <p class="text-muted mb-8">OPOTOがこれまで関わってきた、撮影や展示の記録です。</p>
-    {works.length > 0 ? (
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {works.map((item) => (
+    <div id="works-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {worksImages.map((img) => (
+        <button
+          type="button"
+          data-works-item
+          data-lightbox-trigger
+          data-image={img.src}
+          data-title=""
+          data-description=""
+          aria-label="画像を拡大表示"
+          class="group block w-full text-left hidden"
+        >
           <div class="aspect-[4/5] bg-surface border border-line overflow-hidden">
-            <img
-              src={item.data.image}
-              alt={item.data.title}
-              class="w-full h-full object-cover"
+            <Image
+              src={img}
+              alt=""
+              width={600}
+              quality={80}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
           </div>
-        ))}
-      </div>
-    ) : (
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {Array.from({ length: 4 }).map(() => (
-          <div class="aspect-[4/5] bg-surface border border-line flex items-center justify-center text-muted text-xs">
-            Photo
-          </div>
-        ))}
-      </div>
-    )}
+        </button>
+      ))}
+    </div>
+    <script>
+      const items = Array.from(document.querySelectorAll<HTMLElement>('[data-works-item]'));
+      const shuffled = items.sort(() => Math.random() - 0.5);
+      shuffled.slice(0, 4).forEach(el => el.classList.remove('hidden'));
+    </script>
   </section>
 
   <!-- ABOUT -->
-  <section class="max-w-6xl mx-auto px-6 py-24 border-t border-line">
+  <section class="max-w-6xl mx-auto px-6 py-24 border-t-[0.5px] border-line">
     <div class="max-w-2xl">
-      <h2 class="font-heading-ja text-2xl md:text-3xl mb-6">写真と文化が交わる場所。</h2>
-      <p class="text-muted leading-relaxed mb-6">
-        OPOTO = Opportunity &times; Photography。「日常の中に小さなきっかけを」を合言葉に、鳥取市川端で撮影スタジオとギャラリーを運営しています。
-      </p>
+      <h2 class="font-heading-en text-2xl tracking-wide mb-8">ABOUT</h2>
+      <p class="text-muted mb-8">OPOTOという名前に込めた想い。</p>
       <a href="/about" class="inline-flex items-center gap-2 text-sm font-heading-en hover:gap-3 transition-all">
         ABOUT OPOTO &rarr;
       </a>

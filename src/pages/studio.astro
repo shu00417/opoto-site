@@ -1,23 +1,50 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import studioHero from '../assets/photos/studio-hero.jpg';
 
-const menu = [
+const plans = [
   {
-    title: '成人式 前撮り撮影',
-    text: '振袖・袴姿での前撮り。スタジオでもロケーションでも、その日だけの表情を残します。',
+    label: 'PREMIUM',
+    title: 'プレミアムプラン',
+    text: '七五三・成人式前撮り・フォトウェディングなど。<br />スタジオとロケーションを組み合わせた記念撮影に対応します。',
+    price: '¥55,000',
+    conditions: ['2〜3時間', '50カット〜', 'スタジオ+ロケーション1箇所', '肌補正5枚まで対応'],
   },
   {
-    title: '家族写真・お子様の記念撮影',
-    text: '七五三やお誕生日、家族の節目を自然な雰囲気で撮影します。',
+    label: 'STANDARD',
+    title: 'スタンダードプラン',
+    text: '結婚記念日・お誕生日・ペットとの記念日など、大切な日をしっかり残すプランです。',
+    price: '¥28,000',
+    conditions: ['60分', '40カット〜'],
   },
   {
-    title: 'マタニティ・ニューボーン',
-    text: '生まれてくる前と、生まれたばかりの今。かけがえのない時間を写真に残します。',
+    label: 'SIMPLE',
+    title: 'シンプルプラン',
+    text: 'プロフィール撮影など、気軽に写真を残したい方向けのプランです。',
+    price: '¥18,000',
+    conditions: ['30分'],
   },
-  {
-    title: 'その他 記念撮影',
-    text: '卒業・卒園、誕生日、ペットとの写真など、ご相談に応じて撮影いたします。',
-  },
+];
+
+const setPlans = [
+  { title: 'ヘアメイク&着付け', price: '+¥20,000〜' },
+  { title: '美容師同行撮影', price: '+¥6,000 / 60分' },
+];
+
+const options = [
+  { title: 'ロケーション出張料', price: '+¥5,500〜' },
+  { title: '補正（美肌・糸クズ取りなど）', price: '+¥15,000 / 30枚' },
+  { title: 'プリント各種', price: '+¥1,500〜 / 1枚' },
+];
+
+const priceNotes = [
+  '表記の金額は全て税込です。',
+  '納品データは全て編集（明るさ・トリミング・色味調整）したものをお渡しします。',
+  '撮影データは約2週間程度で納品します。繁忙期はお時間をいただく場合があります。',
+  '衣装のご用意はございません。提携の貸衣装屋さんをご紹介できますので、ご相談ください。',
+  '撮影エリアは鳥取市内を中心に、近郊の各県への出張も可能です。',
+  '本プランは個人向けです。法人のご相談は別途お問い合わせください。',
 ];
 
 const flow = [
@@ -30,36 +57,105 @@ const flow = [
 
 <Layout title="STUDIO" description="OPOTOのスタジオ事業。成人式の前撮りから家族写真まで、自然な表情を残す撮影サービスです。">
   <!-- Hero -->
-  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
-    <span class="font-heading-en text-sm tracking-widest text-muted">STUDIO</span>
-    <h1 class="font-heading-ja text-3xl md:text-5xl leading-tight tracking-tight mt-4 mb-8">
-      大切な日を、<br class="md:hidden" />自然な表情で。
-    </h1>
-    <p class="text-muted leading-relaxed max-w-2xl">
-      成人式の前撮りから家族写真まで。一人ひとりの「今」を、丁寧な対話と自然光を活かした撮影で残します。スタジオでもロケーションでも、その人らしい一枚を。
-    </p>
-  </section>
-
-  <!-- MENU -->
-  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
-    <h2 class="font-heading-en text-2xl tracking-wide mb-10">MENU</h2>
-    <div class="grid md:grid-cols-2 gap-px bg-line border border-line">
-      {menu.map((item) => (
-        <div class="bg-base p-8 md:p-10">
-          <h3 class="font-heading-ja text-xl mb-3">{item.title}</h3>
-          <p class="text-muted leading-relaxed text-sm">{item.text}</p>
-        </div>
-      ))}
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+    <div>
+      <span class="font-heading-en text-sm tracking-widest text-muted">STUDIO</span>
+      <h1 class="font-heading-ja text-xl md:text-3xl leading-tight tracking-tight mt-4 mb-8">
+        特別な日も、そうじゃない日も。
+      </h1>
+      <p class="text-muted leading-relaxed">
+        成人式の前撮りから家族写真まで。一人ひとりの「今」を、丁寧な対話と光を活かした撮影で残します。スタジオでもロケーションでも、あなたらしい一枚を。
+      </p>
+    </div>
+    <div class="aspect-[4/5] overflow-hidden">
+      <Image src={studioHero} alt="" class="w-full h-full object-cover" />
     </div>
   </section>
 
+  <!-- MENU -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-10">MENU</h2>
+
+    <!-- 振袖撮影パック（フィーチャード） -->
+    <div class="border border-ink p-8 md:p-10 mb-6">
+      <span class="font-heading-en text-xs tracking-widest text-muted">PACK</span>
+      <div class="flex items-baseline justify-between gap-4 mt-2 mb-4">
+        <h3 class="font-heading-ja text-xl">振袖撮影パック</h3>
+        <p class="font-heading-ja text-2xl text-ink shrink-0">¥118,000</p>
+      </div>
+      <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+        <p class="text-muted leading-relaxed text-sm flex-1">
+          成人式の前撮りを、ヘアメイク・着付けから撮影・プリントまでまとめて。振袖姿の「今」を残すお得なオールインワンプランです。
+        </p>
+        <div class="md:text-right shrink-0">
+          <p class="text-sm text-muted">50カット〜 / スタジオ+ロケーション</p>
+          <p class="text-xs text-muted mt-1">ヘアメイク&着付け・美容師同行・補正・プリント込み</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3プラン -->
+    <div class="space-y-3 mb-10">
+      {plans.map((plan) => (
+        <div class="border border-line p-8 md:p-10">
+          <span class="font-heading-en text-xs tracking-widest text-muted">{plan.label}</span>
+          <div class="flex items-baseline justify-between gap-4 mt-2 mb-4">
+            <h3 class="font-heading-ja text-xl">{plan.title}</h3>
+            <p class="font-heading-ja text-2xl text-ink shrink-0">{plan.price}</p>
+          </div>
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+            <p class="text-muted leading-relaxed text-sm flex-1" set:html={plan.text} />
+            <ul class="md:text-right shrink-0 space-y-0.5">
+              {plan.conditions.map((c) => (
+                <li class="text-sm text-muted">{c}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- SET PLAN + OPTION -->
+    <div class="grid md:grid-cols-2 gap-10 mb-8">
+      <div>
+        <h3 class="font-heading-en text-sm tracking-widest text-muted mb-4">SET PLAN</h3>
+        <dl class="divide-y divide-line border-t border-b border-line">
+          {setPlans.map((item) => (
+            <div class="py-3 flex items-baseline justify-between gap-4">
+              <dt class="font-heading-ja text-sm">{item.title}</dt>
+              <dd class="font-heading-ja text-sm text-ink shrink-0">{item.price}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div>
+        <h3 class="font-heading-en text-sm tracking-widest text-muted mb-4">OPTION</h3>
+        <dl class="divide-y divide-line border-t border-b border-line">
+          {options.map((item) => (
+            <div class="py-3 flex items-baseline justify-between gap-4">
+              <dt class="font-heading-ja text-sm">{item.title}</dt>
+              <dd class="font-heading-ja text-sm text-ink shrink-0">{item.price}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+
+    <!-- 注意事項 -->
+    <ul class="space-y-1 text-xs text-muted leading-relaxed">
+      {priceNotes.map((note) => (
+        <li>※{note}</li>
+      ))}
+    </ul>
+  </section>
+
   <!-- FLOW -->
-  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line">
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
     <h2 class="font-heading-en text-2xl tracking-wide mb-10">FLOW</h2>
     <div class="grid md:grid-cols-4 gap-8">
       {flow.map((item) => (
         <div>
-          <span class="font-heading-en text-3xl text-muted">{item.step}</span>
+          <span class="font-heading-ja text-2xl text-ink text-muted">{item.step}</span>
           <h3 class="font-heading-ja text-lg mt-3 mb-2">{item.title}</h3>
           <p class="text-muted leading-relaxed text-sm">{item.text}</p>
         </div>
@@ -68,7 +164,7 @@ const flow = [
   </section>
 
   <!-- CTA -->
-  <section class="max-w-6xl mx-auto px-6 py-20 border-t border-line text-center">
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line text-center">
     <p class="text-muted mb-6">
       撮影プランや料金については、お気軽にお問い合わせください。
     </p>

@@ -1,53 +1,92 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
-const works = (await getCollection('works')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+const serviceGlob = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/photos/service_work/**',
+  { eager: true }
 );
+const serviceImages = Object.entries(serviceGlob)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, m]) => m.default);
+
+const galleryGlob = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/photos/gallery_work/**',
+  { eager: true }
+);
+const galleryImages = Object.entries(galleryGlob)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, m]) => m.default);
 ---
 
 <Layout title="WORKS" description="OPOTOがこれまで関わってきた撮影や展示の記録です。">
   <!-- Hero -->
   <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
     <span class="font-heading-en text-sm tracking-widest text-muted">WORKS</span>
-    <h1 class="font-heading-ja text-3xl md:text-5xl leading-tight tracking-tight mt-4 mb-8">
-      これまでの、記録。
+    <h1 class="font-heading-ja text-xl md:text-3xl leading-tight tracking-tight mt-4 mb-8">
+      これまでの記録。
     </h1>
     <p class="text-muted leading-relaxed max-w-2xl">
       OPOTOがこれまで関わってきた撮影や展示の記録です。今後も随時更新していきます。
     </p>
   </section>
 
-  <!-- GRID -->
+  <!-- 撮影サービス -->
   <section class="max-w-6xl mx-auto px-6 pb-24">
-    {works.length > 0 ? (
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {works.map((item) => (
-          <div class="group">
-            <div class="aspect-[4/5] bg-surface border border-line overflow-hidden">
-              <img
-                src={item.data.image}
-                alt={item.data.title}
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
-            </div>
-            <p class="mt-2 text-sm">{item.data.title}</p>
-            {item.data.description && (
-              <p class="text-xs text-muted leading-relaxed">{item.data.description}</p>
-            )}
+    <h2 class="font-heading-en text-2xl tracking-wide mb-8">STUDIO</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {serviceImages.map((img) => (
+        <button
+          type="button"
+          data-lightbox-trigger
+          data-image={img.src}
+          data-title=""
+          data-description=""
+          aria-label="画像を拡大表示"
+          class="group block w-full text-left"
+        >
+          <div class="aspect-[4/5] bg-surface border border-line overflow-hidden">
+            <Image
+              src={img}
+              alt=""
+              width={600}
+              quality={80}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
           </div>
-        ))}
-      </div>
-    ) : (
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {Array.from({ length: 8 }).map(() => (
-          <div class="aspect-[4/5] bg-surface border border-line flex items-center justify-center text-muted text-xs">
-            Photo
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <!-- ギャラリー -->
+  <section class="max-w-6xl mx-auto px-6 pb-24 border-t-[0.5px] border-line pt-20">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-8">GALLERY</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {galleryImages.map((img) => (
+        <button
+          type="button"
+          data-lightbox-trigger
+          data-image={img.src}
+          data-title=""
+          data-description=""
+          aria-label="画像を拡大表示"
+          class="group block w-full text-left"
+        >
+          <div class="aspect-[4/5] bg-surface border border-line overflow-hidden">
+            <Image
+              src={img}
+              alt=""
+              width={600}
+              quality={80}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
           </div>
-        ))}
-      </div>
-    )}
+        </button>
+      ))}
+    </div>
   </section>
 </Layout>

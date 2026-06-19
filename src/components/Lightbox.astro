@@ -1,0 +1,65 @@
+<div
+  id="lightbox"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-ink/90 p-4 md:p-12"
+  aria-hidden="true"
+>
+  <button
+    type="button"
+    data-lightbox-close
+    aria-label="閉じる"
+    class="absolute top-4 right-4 md:top-8 md:right-8 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-base/80 text-ink hover:bg-base transition-colors"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-5 w-5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+  <div class="max-w-4xl max-h-full w-full flex flex-col items-center">
+    <img id="lightbox-image" src="" alt="" class="max-h-[75vh] w-auto max-w-full object-contain" />
+    <div class="mt-4 text-center text-white">
+      <p id="lightbox-title" class="font-heading-ja text-lg md:text-xl"></p>
+      <p id="lightbox-description" class="mt-2 text-sm text-white/70"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-image') as HTMLImageElement | null;
+  const titleEl = document.getElementById('lightbox-title');
+  const descEl = document.getElementById('lightbox-description');
+
+  const open = (src: string, title: string, description: string) => {
+    if (!lightbox || !img) return;
+    img.src = src;
+    img.alt = title;
+    if (titleEl) titleEl.textContent = title;
+    if (descEl) descEl.textContent = description;
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('overflow-hidden');
+  };
+
+  const close = () => {
+    if (!lightbox || !img) return;
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('overflow-hidden');
+    img.src = '';
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-lightbox-trigger]').forEach((el) => {
+    el.addEventListener('click', () => {
+      open(el.dataset.image ?? '', el.dataset.title ?? '', el.dataset.description ?? '');
+    });
+  });
+
+  lightbox?.querySelector('[data-lightbox-close]')?.addEventListener('click', close);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+</script>
