@@ -16,11 +16,8 @@ import Layout from '../layouts/Layout.astro';
 
   <!-- FORM -->
   <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
-    <form name="contact" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="bot-field" class="max-w-xl space-y-8">
-      <input type="hidden" name="form-name" value="contact" />
-      <p class="hidden">
-        <label>Don't fill this out: <input name="bot-field" /></label>
-      </p>
+    <form method="POST" action="https://formspree.io/f/mbdevnrg" class="max-w-xl space-y-8">
+      <input type="hidden" name="_next" value="https://opoto.jp/thanks" />
 
       <div>
         <label for="name" class="block font-heading-en text-sm tracking-wide text-muted mb-2">NAME</label>
