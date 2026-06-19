@@ -9,7 +9,35 @@ interface Props {
   description?: string;
 }
 
-const { title, description = 'Photo and Culture OPOTO' } = Astro.props;
+const { title, description = '鳥取市川端にあるフォトスタジオ＆ギャラリー。成人式の前撮りから家族写真まで対応するスタジオと、写真展・プリントサービスを行うギャラリーを運営しています。' } = Astro.props;
+
+const pageTitle = `${title} | OPOTO`;
+const canonicalURL = new URL(Astro.url.pathname, 'https://opoto.jp');
+const ogImage = 'https://opoto.jp/og-image.jpg';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Photo and Culture OPOTO",
+  "url": "https://opoto.jp",
+  "image": ogImage,
+  "description": "鳥取市川端にあるフォトスタジオ＆ギャラリー。",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "川端1丁目119 裏側入口2階",
+    "addressLocality": "鳥取市",
+    "addressRegion": "鳥取県",
+    "postalCode": "680-0036",
+    "addressCountry": "JP"
+  },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Thursday","Friday","Saturday","Sunday"], "opens": "11:00", "closes": "19:00" }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/opoto_photostudio/",
+    "https://www.instagram.com/opoto_gallery/"
+  ]
+};
 
 const navItems = [
   { href: '/studio', label: 'STUDIO' },
@@ -29,7 +57,26 @@ const navItems = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <title>{title} | OPOTO</title>
+    <title>{pageTitle}</title>
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="Photo and Culture OPOTO" />
+    <meta property="og:locale" content="ja_JP" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- 構造化データ -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
