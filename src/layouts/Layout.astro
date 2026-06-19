@@ -77,6 +77,15 @@ const navItems = [
 
     <!-- 構造化データ -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJW36W1JVH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-SJW36W1JVH');
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
