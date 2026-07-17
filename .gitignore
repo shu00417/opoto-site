@@ -28,13 +28,13 @@ pnpm-debug.log*
 
 # 展示写真の元画像（サイトでは -web.jpg の軽量版を使用）
 # 元ファイルはローカルに保持し、本番には配信しない
-public/EXHIBITIONS/nitijyo_01.jpg
-public/EXHIBITIONS/akari.jpg
-public/EXHIBITIONS/toridai_01.jpg
-public/EXHIBITIONS/tanin_01.PNG
-public/EXHIBITIONS/tanin_02.JPG
-public/EXHIBITIONS/tokyo_01.jpg
-public/EXHIBITIONS/mm_01.jpg
+public/exhibition-images/nitijyo_01.jpg
+public/exhibition-images/akari.jpg
+public/exhibition-images/toridai_01.jpg
+public/exhibition-images/tanin_01.PNG
+public/exhibition-images/tanin_02.JPG
+public/exhibition-images/tokyo_01.jpg
+public/exhibition-images/mm_01.jpg
 
 # 制作中のためまだ公開しないページ
 src/pages/event.astro

@@ -4,9 +4,9 @@ artist: "Shoma Yamaguchi / ﾅｶｻﾞﾜ / Yasunori Otani / Rui Arita / Hiroko
 exhibitionType: "公募展"
 status: "past"
 period: "2026.04.21 - 2026.05.06"
-image: "/EXHIBITIONS/nitijyo_01-web.jpg"
+image: "/exhibition-images/nitijyo_01-web.jpg"
 images:
-  - "/EXHIBITIONS/nitijyo_01-web.jpg"
+  - "/exhibition-images/nitijyo_01-web.jpg"
 note: "https://note.com/opoto_tottori/n/n6dd4ba46580b"
 description: |
   OPOTO企画の公募写真展「日常の欠片」を開催いたします。

@@ -4,10 +4,10 @@ artist: "小渕 花梨 / 弥永 拳太"
 exhibitionType: "企画展"
 status: "upcoming"
 period: "2026.08.15 - 2026.08.30"
-image: "/EXHIBITIONS/tanin_01-web.jpg"
+image: "/exhibition-images/tanin_01-web.jpg"
 images:
-  - "/EXHIBITIONS/tanin_01-web.jpg"
-  - "/EXHIBITIONS/tanin_02-web.jpg"
+  - "/exhibition-images/tanin_01-web.jpg"
+  - "/exhibition-images/tanin_02-web.jpg"
 description: |
   OPOTO初の企画展として、ゲスト作家の弥永 拳太氏と小渕 花梨氏をお招きし、写真展「他人の日記」を開催いたします。
 

@@ -4,9 +4,9 @@ artist: "初丸-wimaru- / Tomoyuki Ooro / Takurou"
 exhibitionType: "公募展"
 status: "past"
 period: "2026.06.30 - 2026.07.12"
-image: "/EXHIBITIONS/mm_01-web.jpg"
+image: "/exhibition-images/mm_01-web.jpg"
 images:
-  - "/EXHIBITIONS/mm_01-web.jpg"
+  - "/exhibition-images/mm_01-web.jpg"
 description: |
   OPOTO企画の公募写真展「見えているもの/見えていないもの」を開催いたします。
   3名の出展者が各自の視点で解釈した作品を展示いたします。

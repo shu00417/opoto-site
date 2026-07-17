@@ -4,9 +4,9 @@ artist: "鳥取大学写真部メンバー"
 exhibitionType: "グループ展"
 status: "past"
 period: "2026.06.06 - 2026.06.07"
-image: "/EXHIBITIONS/toridai_01-web.jpg"
+image: "/exhibition-images/toridai_01-web.jpg"
 images:
-  - "/EXHIBITIONS/toridai_01-web.jpg"
+  - "/exhibition-images/toridai_01-web.jpg"
 note: "https://note.com/opoto_tottori/n/n2303f847250f"
 description: |
   鳥取大学写真部写真展を開催いたします。

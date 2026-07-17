@@ -4,9 +4,9 @@ artist: "Shuji Yoshida"
 exhibitionType: "個展"
 status: "past"
 period: "2026.02.24 - 2026.03.08"
-image: "/EXHIBITIONS/tokyo_01-web.jpg"
+image: "/exhibition-images/tokyo_01-web.jpg"
 images:
-  - "/EXHIBITIONS/tokyo_01-web.jpg"
+  - "/exhibition-images/tokyo_01-web.jpg"
 description: |
   Shuji Yoshida Photo Exhibition
 

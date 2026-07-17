@@ -4,10 +4,10 @@ artist: "たくてぃ / SUBARU / 鵜瀬 麻弥 / 谷口 一真"
 exhibitionType: "グループ展"
 status: "next"
 period: "2026.07.28 - 2026.08.02"
-image: "/EXHIBITIONS/sora_01.JPG"
+image: "/exhibition-images/sora_01.JPG"
 images:
-  - "/EXHIBITIONS/sora_01.JPG"
-  - "/EXHIBITIONS/sora_02.JPG"
+  - "/exhibition-images/sora_01.JPG"
+  - "/exhibition-images/sora_02.JPG"
 description: |
   「空は繋がっている」をテーマに
   出展者4名によるグループ展を開催いたします。
