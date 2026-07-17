@@ -25,3 +25,20 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# 展示写真の元画像（サイトでは -web.jpg の軽量版を使用）
+# 元ファイルはローカルに保持し、本番には配信しない
+public/EXHIBITIONS/nitijyo_01.jpg
+public/EXHIBITIONS/akari.jpg
+public/EXHIBITIONS/toridai_01.jpg
+public/EXHIBITIONS/tanin_01.PNG
+public/EXHIBITIONS/tanin_02.JPG
+public/EXHIBITIONS/tokyo_01.jpg
+public/EXHIBITIONS/mm_01.jpg
+
+# 制作中のためまだ公開しないページ
+src/pages/event.astro
+src/content/events/
+
+# Claude Code のローカル設定（他プロジェクトとの共有シンボリックリンク）
+.claude

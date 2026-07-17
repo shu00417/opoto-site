@@ -25,3 +25,47 @@ collections:
       - { label: "日付", name: "date", widget: "datetime" }
       - { label: "画像", name: "image", widget: "image" }
       - { label: "説明", name: "description", widget: "text", required: false }
+
+  - name: "exhibitions"
+    label: "展示 (EXHIBITIONS)"
+    label_singular: "展示"
+    folder: "src/content/exhibitions"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "展示タイトル", name: "title", widget: "string" }
+      - { label: "作家名", name: "artist", widget: "string", required: false }
+      - label: "状態"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "開催中", value: "current" }
+          - { label: "次回", value: "next" }
+          - { label: "開催予定", value: "upcoming" }
+          - { label: "過去の展示", value: "past" }
+        default: "past"
+      - { label: "会期（自由記述・例: 2026年6月13日〜18日）", name: "period", widget: "string", required: false }
+      - { label: "メイン画像", name: "image", widget: "image", required: false }
+      - { label: "説明", name: "description", widget: "text", required: false }
+      - { label: "noteアーカイブ記事のURL（空欄ならnoteトップへ）", name: "note", widget: "string", required: false }
+      - { label: "下書き（チェックすると公開されません）", name: "draft", widget: "boolean", default: false }
+
+  - name: "events"
+    label: "イベント (EVENT)"
+    label_singular: "イベント"
+    folder: "src/content/events"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "イベントタイトル", name: "title", widget: "string" }
+      - label: "状態"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "開催予定", value: "upcoming" }
+          - { label: "過去のイベント", value: "past" }
+        default: "past"
+      - { label: "開催日時（自由記述・例: 2026年8月10日 13:00〜）", name: "period", widget: "string", required: false }
+      - { label: "メイン画像", name: "image", widget: "image", required: false }
+      - { label: "説明", name: "description", widget: "text", required: false }
+      - { label: "下書き（チェックすると公開されません）", name: "draft", widget: "boolean", default: false }

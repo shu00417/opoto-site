@@ -1,0 +1,126 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('exhibitions', ({ data }) => !data.draft);
+
+const statusOrder: Record<string, number> = { current: 0, next: 1, upcoming: 2 };
+
+const featured = all
+  .filter((e) => e.data.status !== 'past')
+  .sort((a, b) => {
+    const diff = statusOrder[a.data.status] - statusOrder[b.data.status];
+    return diff !== 0 ? diff : a.id.localeCompare(b.id);
+  });
+const past = all
+  .filter((e) => e.data.status === 'past')
+  .sort((a, b) => b.id.localeCompare(a.id));
+
+const coverOf = (ex: (typeof all)[number]) => ex.data.image ?? ex.data.images?.[0];
+const excerptOf = (ex: (typeof all)[number]) =>
+  ex.data.description?.split(/\n\s*\n/)[0]?.trim();
+
+const statusLabel: Record<string, string> = {
+  current: '開催中',
+  next: 'NEXT',
+  upcoming: 'UPCOMING',
+  past: 'PAST',
+};
+---
+
+<Layout title="EXHIBITIONS" description="OPOTOギャラリーで開催する展覧会の情報です。開催中・次回の展示と、これまでの展示の記録をご覧いただけます。">
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <span class="font-heading-en text-sm tracking-widest text-muted">EXHIBITIONS</span>
+    <h1 class="font-heading-ja text-xl md:text-3xl leading-tight tracking-tight mt-4 mb-8">
+      開催情報
+    </h1>
+    <p class="text-muted leading-relaxed max-w-2xl">
+      OPOTOギャラリーで開催する展覧会の情報です。<br />開催中・次回の展示と、これまでの展示の記録をご覧いただけます。
+    </p>
+  </section>
+
+  <!-- 開催中・次回 -->
+  {featured.length > 0 && (
+    <section class="max-w-6xl mx-auto px-6 pb-8 md:pb-16">
+      <h2 class="font-heading-en text-2xl tracking-wide mb-10">CURRENT &amp; UPCOMING</h2>
+      <div class="space-y-16">
+        {featured.map((ex) => (
+          <article class="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+            <div class="bg-surface border border-line overflow-hidden max-w-[280px] md:max-w-[320px]">
+              {coverOf(ex) ? (
+                <img src={coverOf(ex)} alt={ex.data.title} class="w-full h-auto" loading="lazy" />
+              ) : (
+                <div class="aspect-[4/3] w-full flex items-center justify-center text-muted text-sm">
+                  準備中
+                </div>
+              )}
+            </div>
+            <div>
+              <span class="font-heading-en text-xs tracking-widest text-muted">{statusLabel[ex.data.status]}</span>
+              <h3 class="font-heading-ja text-2xl mt-2 mb-3">{ex.data.title}</h3>
+              {ex.data.artist && (
+                <p class="text-sm text-muted mb-1">{ex.data.artist}</p>
+              )}
+              {ex.data.period && (
+                <p class="text-sm text-ink mb-4">{ex.data.period}</p>
+              )}
+              {excerptOf(ex) && (
+                <p class="text-muted leading-relaxed text-sm mb-6">{excerptOf(ex)}</p>
+              )}
+              <a href={`/exhibitions/${ex.id}`} class="inline-flex items-center gap-2 text-sm font-heading-en hover:gap-3 transition-all">
+                展示の詳細を見る &rarr;
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- 過去の展示 -->
+  {past.length > 0 && (
+    <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+      <h2 class="font-heading-en text-2xl tracking-wide mb-10">PAST</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {past.map((ex) => (
+          <a href={`/exhibitions/${ex.id}`} class="group block">
+            <div class="aspect-[3/4] bg-surface border border-line overflow-hidden mb-4 flex items-center justify-center">
+              {coverOf(ex) ? (
+                <img src={coverOf(ex)} alt={ex.data.title} class="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              ) : (
+                <span class="text-muted text-sm">準備中</span>
+              )}
+            </div>
+            <h3 class="font-heading-ja text-lg mb-1 group-hover:text-muted transition-colors">{ex.data.title}</h3>
+            {ex.data.artist && (
+              <p class="text-sm text-muted mb-1">{ex.data.artist}</p>
+            )}
+            {ex.data.period && (
+              <p class="text-xs text-muted">{ex.data.period}</p>
+            )}
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {all.length === 0 && (
+    <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+      <p class="text-muted">現在、掲載している展示はありません。</p>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line text-center">
+    <p class="text-muted mb-6">
+      展示のご相談や、貸しギャラリーのご利用については、お気軽にお問い合わせください。
+    </p>
+    <a
+      href="/contact"
+      class="inline-flex items-center gap-2 font-heading-en tracking-wide border border-line px-8 py-3 hover:bg-surface transition-colors"
+    >
+      CONTACT &rarr;
+    </a>
+  </section>
+</Layout>

@@ -1,7 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import studioHero from '../assets/photos/studio-hero.jpg';
+
+const serviceGlob = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/photos/service_work/**',
+  { eager: true }
+);
+const serviceImages = Object.entries(serviceGlob)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, m]) => m.default);
 
 const plans = [
   {
@@ -70,6 +79,41 @@ const flow = [
     <div class="aspect-[4/5] overflow-hidden">
       <Image src={studioHero} alt="" class="w-full h-full object-cover" />
     </div>
+  </section>
+
+  <!-- WORKS -->
+  <section id="works" class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line scroll-mt-24">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-8">WORKS</h2>
+    <div id="studio-works-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {serviceImages.map((img) => (
+        <button
+          type="button"
+          data-studio-works-item
+          data-lightbox-trigger
+          data-image={img.src}
+          data-title=""
+          data-description=""
+          aria-label="画像を拡大表示"
+          class="group block w-full text-left hidden"
+        >
+          <div class="aspect-[4/5] bg-surface border border-line overflow-hidden">
+            <Image
+              src={img}
+              alt=""
+              width={600}
+              quality={80}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+        </button>
+      ))}
+    </div>
+    <script>
+      const items = Array.from(document.querySelectorAll<HTMLElement>('[data-studio-works-item]'));
+      const shuffled = items.sort(() => Math.random() - 0.5);
+      shuffled.slice(0, 8).forEach((el) => el.classList.remove('hidden'));
+    </script>
   </section>
 
   <!-- MENU -->
