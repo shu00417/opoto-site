@@ -11,7 +11,7 @@ interface Props {
 
 const { title, description = '鳥取市川端にあるフォトスタジオ＆ギャラリー。成人式の前撮りから家族写真まで対応するスタジオと、写真展・プリントサービスを行うギャラリーを運営しています。' } = Astro.props;
 
-const pageTitle = `${title} | OPOTO`;
+const pageTitle = title.includes('OPOTO') ? title : `${title} | OPOTO`;
 const canonicalURL = new URL(Astro.url.pathname, 'https://opoto.jp');
 const ogImage = 'https://opoto.jp/og-image.jpg';
 
