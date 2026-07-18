@@ -35,6 +35,10 @@ public/exhibition-images/tanin_01.PNG
 public/exhibition-images/tanin_02.JPG
 public/exhibition-images/tokyo_01.jpg
 public/exhibition-images/mm_01.jpg
+public/exhibition-images/between_02.PNG
+public/exhibition-images/hiraku.png
+# 差し替えで使わなくなった旧画像（ローカルには保持）
+public/exhibition-images/between.jpg
 
 # 制作中のためまだ公開しないページ
 src/pages/event.astro
