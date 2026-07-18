@@ -58,17 +58,17 @@ const statusLabel: Record<string, string> = {
             </div>
             <div>
               <span class="font-heading-en text-xs tracking-widest text-muted">{statusLabel[ex.data.status]}</span>
-              <h3 class="font-heading-ja text-2xl mt-2 mb-3">{ex.data.title}</h3>
+              <h3 class="font-heading-ja text-2xl mt-3 mb-5">{ex.data.title}</h3>
               {ex.data.artist && (
-                <p class="text-sm text-muted mb-1">{ex.data.artist}</p>
+                <p class="text-sm text-muted mb-3">{ex.data.artist}</p>
               )}
               {ex.data.period && (
-                <p class="text-sm text-muted mb-4">{ex.data.period}</p>
+                <p class="text-sm text-muted mb-6">{ex.data.period}</p>
               )}
               {excerptOf(ex) && (
-                <p class="text-muted leading-relaxed text-sm mb-6">{excerptOf(ex)}</p>
+                <p class="text-muted leading-relaxed text-sm mb-8">{excerptOf(ex)}</p>
               )}
-              <a href={`/exhibitions/${ex.id}`} class="inline-flex items-center gap-2 text-sm font-heading-en hover:gap-3 transition-all">
+              <a href={`/exhibitions/${ex.id}`} class="inline-flex items-center gap-2 text-sm hover:gap-3 transition-all">
                 展示の詳細を見る &rarr;
               </a>
             </div>
