@@ -40,4 +40,16 @@ const events = defineCollection({
   }),
 });
 
-export const collections = { works, exhibitions, events };
+const contents = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/contents' }),
+  schema: z.object({
+    title: z.string(),
+    series: z.enum(['sigotobito', 'photolife']).default('sigotobito'),
+    date: z.date(),
+    thumbnail: z.string(),
+    note: z.string().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { works, exhibitions, events, contents };

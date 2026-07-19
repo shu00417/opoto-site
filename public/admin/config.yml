@@ -50,6 +50,26 @@ collections:
       - { label: "noteアーカイブ記事のURL（空欄ならnoteトップへ）", name: "note", widget: "string", required: false }
       - { label: "下書き（チェックすると公開されません）", name: "draft", widget: "boolean", default: false }
 
+  - name: "contents"
+    label: "読みもの (CONTENTS)"
+    label_singular: "記事"
+    folder: "src/content/contents"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "タイトル", name: "title", widget: "string" }
+      - label: "連載シリーズ"
+        name: "series"
+        widget: "select"
+        options:
+          - { label: "鳥取しごとびと", value: "sigotobito" }
+          - { label: "フォトライフ", value: "photolife" }
+        default: "sigotobito"
+      - { label: "日付（新しいものが左に並びます）", name: "date", widget: "datetime" }
+      - { label: "サムネイル画像", name: "thumbnail", widget: "image" }
+      - { label: "note記事のURL（空欄ならnoteトップへ）", name: "note", widget: "string", required: false }
+      - { label: "下書き（チェックすると公開されません）", name: "draft", widget: "boolean", default: false }
+
   - name: "events"
     label: "イベント (EVENT)"
     label_singular: "イベント"

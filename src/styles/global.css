@@ -21,3 +21,11 @@ body {
   background-color: var(--color-base);
   color: var(--color-ink);
 }
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

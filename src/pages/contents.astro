@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('contents', ({ data }) => !data.draft);
+
+const bySeries = (series: string) =>
+  all
+    .filter((c) => c.data.series === series)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const series = [
+  {
+    key: 'sigotobito',
+    en: 'TOTTORI SHIGOTOBITO',
+    ja: '鳥取しごとびと',
+    lead: '鳥取で働く人たちを訪ね、その仕事と想いを写真と言葉で綴る連載です。',
+    items: bySeries('sigotobito'),
+  },
+  {
+    key: 'photolife',
+    en: 'PHOTO LIFE',
+    ja: 'あの人のフォトライフ',
+    lead: '写真とともにある暮らしの風景をお届けする連載です。',
+    items: bySeries('photolife'),
+  },
+];
+
+const noteHref = (note?: string) => note ?? 'https://note.com/opoto_tottori';
+---
+
+<Layout title="CONTENTS" description="OPOTOがnoteで綴る連載記事です。鳥取で働く人たちを訪ねる「鳥取しごとびと」、写真とともにある暮らしを綴る「フォトライフ」をお届けします。">
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <span class="font-heading-en text-sm tracking-widest text-muted">CONTENTS</span>
+    <h1 class="font-heading-ja text-xl md:text-3xl leading-tight tracking-tight mt-4 mb-8">
+      読みもの
+    </h1>
+    <p class="text-muted leading-relaxed max-w-2xl">
+      OPOTOがnoteで綴る連載記事です。<br />写真と言葉で、鳥取の人と暮らしをお届けします。
+    </p>
+  </section>
+
+  {series.map((s, i) => (
+    <section class={`max-w-6xl mx-auto px-6 ${i > 0 ? 'py-20 border-t-[0.5px] border-line' : 'pb-8 md:pb-16'}`}>
+      <div class="mb-8">
+        <span class="font-heading-en text-xs tracking-widest text-muted">{s.en}</span>
+        <h2 class="font-heading-ja text-2xl md:text-3xl mt-2 mb-4">{s.ja}</h2>
+        <p class="text-muted leading-relaxed text-sm max-w-2xl">{s.lead}</p>
+      </div>
+
+      {s.items.length > 0 ? (
+        <div class="-mx-6 px-6 overflow-x-auto scrollbar-none">
+          <div class="flex gap-6 pb-2">
+            {s.items.map((c) => (
+              <a
+                href={noteHref(c.data.note)}
+                target="_blank"
+                rel="noopener"
+                class="group block shrink-0 w-[280px] md:w-[340px]"
+              >
+                <div class="bg-surface border border-line overflow-hidden mb-3">
+                  <img
+                    src={c.data.thumbnail}
+                    alt={c.data.title}
+                    class="w-full h-auto transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="flex items-center justify-between gap-2 text-muted group-hover:text-ink transition-colors">
+                  <span class="text-sm">この記事を読む</span>
+                  <span class="font-heading-en text-xs tracking-wide">note &rarr;</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <p class="text-muted text-sm">記事は準備中です。</p>
+      )}
+    </section>
+  ))}
+
+  <!-- CTA -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line text-center">
+    <p class="text-muted mb-6">
+      連載の更新はnoteとInstagramでお知らせしています。ぜひフォローしてご覧ください。
+    </p>
+    <a
+      href="https://note.com/opoto_tottori"
+      target="_blank"
+      rel="noopener"
+      class="inline-flex items-center gap-2 font-heading-en tracking-wide border border-line px-8 py-3 hover:bg-surface transition-colors"
+    >
+      note &rarr;
+    </a>
+  </section>
+</Layout>
