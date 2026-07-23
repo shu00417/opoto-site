@@ -20,6 +20,26 @@ const scenes = [
   '作品のプリント・ポートフォリオ制作',
   'その他、写真にまつわる活動全般',
 ];
+
+const useItems = [
+  { title: '使用料', value: '¥8,000 / 1日' },
+  { title: '期間', value: '6日間（火〜日）を1期間' },
+  { title: '時間', value: '11:00–19:00' },
+];
+
+const useNotes = [
+  '3日間のみのご利用や、1ヶ月単位でのご利用もご相談ください。',
+  '最終日のみ11:00–17:00とさせていただいております。',
+  '場所代のため、グループ展の場合は一人あたりの費用を抑えられます。',
+  '壁のサイズは<a href="/opoto-exhibition-space.pdf" target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-ink transition-colors">図面（PDF）</a>をご確認ください。俯瞰図と、壁を横一列に並べた図をご用意しています。',
+];
+
+const supports = [
+  { title: 'プリント', text: '写真に合う紙を一緒に選び、顔料インクで出力します。A3ノビまで対応。' },
+  { title: '額縁レンタル', text: '14×17インチ・18×22インチをご用意しています。' },
+  { title: 'マットカット', text: 'ご指定のサイズにてマットを加工可能です。2週間ほどお時間をいただきます。' },
+  { title: 'ブック・zineの委託販売', text: '制作されたブックやzineを、ギャラリー内で販売できます。' },
+];
 ---
 
 <Layout title="GALLERY" description="OPOTOのギャラリー事業。貸しギャラリーとプリントサービスを通じて、写真活動を行うすべての人の拠点を目指しています。">
@@ -66,6 +86,54 @@ const scenes = [
         </li>
       ))}
     </ul>
+  </section>
+
+  <!-- USE -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-10">USE</h2>
+    <dl class="divide-y divide-line border-t border-b border-line max-w-2xl mb-6">
+      {useItems.map((item) => (
+        <div class="py-4 flex items-baseline justify-between gap-4">
+          <dt class="font-heading-ja text-sm text-muted">{item.title}</dt>
+          <dd class="font-heading-ja text-ink shrink-0">{item.value}</dd>
+        </div>
+      ))}
+    </dl>
+    <ul class="space-y-1 text-xs text-muted leading-relaxed">
+      {useNotes.map((note) => (
+        <li set:html={`※${note}`} />
+      ))}
+    </ul>
+  </section>
+
+  <!-- SUPPORT -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-10">SUPPORT</h2>
+    <p class="text-muted leading-relaxed mb-8 max-w-2xl">
+      展示にあわせて、こんなご依頼も承っています。
+    </p>
+    <dl class="divide-y divide-line border-t border-b border-line">
+      {supports.map((item) => (
+        <div class="py-5 flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-8">
+          <dt class="font-heading-ja text-ink shrink-0 md:w-64">{item.title}</dt>
+          <dd class="text-muted leading-relaxed text-sm md:text-right md:flex-1">{item.text}</dd>
+        </div>
+      ))}
+    </dl>
+    <p class="text-xs text-muted leading-relaxed mt-6">
+      ※料金は店頭にてご案内しています。お気軽にお問い合わせください。
+    </p>
+  </section>
+
+  <!-- ARCHIVE -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-8">ARCHIVE</h2>
+    <p class="text-muted leading-relaxed mb-8 max-w-2xl">
+      これまでOPOTOで開催した展示の記録は、EXHIBITIONSページにまとめています。
+    </p>
+    <a href="/exhibitions#past" class="inline-flex items-center gap-2 text-sm hover:gap-3 transition-all">
+      展示の記録を見る &rarr;
+    </a>
   </section>
 
   <!-- CTA -->

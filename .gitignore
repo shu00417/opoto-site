@@ -44,5 +44,9 @@ public/exhibition-images/between.jpg
 src/pages/event.astro
 src/content/events/
 
+# 委託販売の申込書兼契約書（公開の可否を検討中のため、本番には配信しない）
+# 公開が決まったらこの行を削除し、GALLERYページからリンクする
+public/委託販売申込書兼契約書.pdf
+
 # Claude Code のローカル設定（他プロジェクトとの共有シンボリックリンク）
 .claude

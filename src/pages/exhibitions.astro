@@ -80,7 +80,7 @@ const statusLabel: Record<string, string> = {
 
   <!-- 過去の展示 -->
   {past.length > 0 && (
-    <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+    <section id="past" class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line scroll-mt-24">
       <h2 class="font-heading-en text-2xl tracking-wide mb-10">PAST</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         {past.map((ex) => (
