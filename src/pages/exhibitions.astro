@@ -47,7 +47,7 @@ const statusLabel: Record<string, string> = {
       <div class="space-y-16">
         {featured.map((ex) => (
           <article class="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
-            <div class="bg-surface border border-line overflow-hidden max-w-[280px] md:max-w-[320px]">
+            <a href={`/exhibitions/${ex.id}`} class="block bg-surface border border-line overflow-hidden max-w-[280px] md:max-w-[320px]">
               {coverOf(ex) ? (
                 <img src={coverOf(ex)} alt={ex.data.title} class="w-full h-auto" loading="lazy" />
               ) : (
@@ -55,7 +55,7 @@ const statusLabel: Record<string, string> = {
                   準備中
                 </div>
               )}
-            </div>
+            </a>
             <div>
               <span class="font-heading-en text-xs tracking-widest text-muted">{statusLabel[ex.data.status]}</span>
               <h3 class="font-heading-ja text-2xl mt-3 mb-5">{ex.data.title}</h3>

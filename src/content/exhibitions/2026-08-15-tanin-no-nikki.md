@@ -2,7 +2,7 @@
 title: "他人の日記"
 artist: "小渕 花梨 / 弥永 拳太"
 exhibitionType: "企画展"
-status: "upcoming"
+status: "next"
 period: "2026.08.15 - 2026.08.30"
 image: "/exhibition-images/tanin_01-web.jpg"
 images:
