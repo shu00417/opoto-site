@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('events', ({ data }) => !data.draft);
+
+const upcoming = all
+  .filter((e) => e.data.status === 'upcoming')
+  .sort((a, b) => a.id.localeCompare(b.id));
+const past = all
+  .filter((e) => e.data.status === 'past')
+  .sort((a, b) => b.id.localeCompare(a.id));
+
+const coverOf = (ev: (typeof all)[number]) => ev.data.image ?? ev.data.images?.[0];
+const excerptOf = (ev: (typeof all)[number]) =>
+  ev.data.description?.split(/\n\s*\n/)[0]?.trim();
+---
+
+<Layout title="EVENT" description="OPOTOで開催するワークショップやイベントの情報です。開催予定のイベントと、これまでの記録をご覧いただけます。">
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <span class="font-heading-en text-sm tracking-widest text-muted">EVENT</span>
+    <h1 class="font-heading-ja text-xl md:text-3xl leading-tight tracking-tight mt-4 mb-8">
+      イベント情報
+    </h1>
+    <p class="text-muted leading-relaxed max-w-2xl">
+      OPOTOで開催するワークショップやイベントの情報です。写真を撮る、選ぶ、飾る。その楽しさに触れられる機会をご用意しています。
+    </p>
+  </section>
+
+  <!-- 開催予定 -->
+  {upcoming.length > 0 && (
+    <section class="max-w-6xl mx-auto px-6 pb-8 md:pb-16">
+      <h2 class="font-heading-en text-2xl tracking-wide mb-10">UPCOMING</h2>
+      <div class="space-y-16">
+        {upcoming.map((ev) => (
+          <article class="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+            <a href={`/event/${ev.id}`} class="block bg-surface border border-line overflow-hidden max-w-[280px] md:max-w-[320px]">
+              {coverOf(ev) ? (
+                <img src={coverOf(ev)} alt={ev.data.title} class="w-full h-auto" loading="lazy" />
+              ) : (
+                <div class="aspect-[4/3] w-full flex items-center justify-center text-muted text-sm">
+                  準備中
+                </div>
+              )}
+            </a>
+            <div>
+              <span class="font-heading-en text-xs tracking-widest text-muted">UPCOMING</span>
+              <h3 class="font-heading-ja text-2xl mt-3 mb-5">{ev.data.title}</h3>
+              {ev.data.period && (
+                <p class="text-sm text-muted mb-6">{ev.data.period}</p>
+              )}
+              {excerptOf(ev) && (
+                <p class="text-muted leading-relaxed text-sm mb-8">{excerptOf(ev)}</p>
+              )}
+              <a href={`/event/${ev.id}`} class="inline-flex items-center gap-2 text-sm hover:gap-3 transition-all">
+                イベントの詳細を見る &rarr;
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- 過去のイベント -->
+  {past.length > 0 && (
+    <section id="past" class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line scroll-mt-24">
+      <h2 class="font-heading-en text-2xl tracking-wide mb-10">PAST</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {past.map((ev) => (
+          <a href={`/event/${ev.id}`} class="group block">
+            <div class="aspect-[3/4] bg-surface border border-line overflow-hidden mb-4 flex items-center justify-center">
+              {coverOf(ev) ? (
+                <img src={coverOf(ev)} alt={ev.data.title} class="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              ) : (
+                <span class="text-muted text-sm">準備中</span>
+              )}
+            </div>
+            <h3 class="font-heading-ja text-lg mb-1 group-hover:text-muted transition-colors">{ev.data.title}</h3>
+            {ev.data.period && (
+              <p class="text-xs text-muted">{ev.data.period}</p>
+            )}
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {all.length === 0 && (
+    <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+      <p class="text-muted">現在、掲載しているイベントはありません。</p>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line text-center">
+    <p class="text-muted mb-6">
+      イベントへの参加やご相談は、お気軽にお問い合わせください。
+    </p>
+    <a
+      href="/contact"
+      class="inline-flex items-center gap-2 font-heading-en tracking-wide border border-line px-8 py-3 hover:bg-surface transition-colors"
+    >
+      CONTACT &rarr;
+    </a>
+  </section>
+</Layout>

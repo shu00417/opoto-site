@@ -1,0 +1,108 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('events', ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+
+const images = data.images && data.images.length > 0
+  ? data.images
+  : data.image
+    ? [data.image]
+    : [];
+
+const paragraphs = data.description
+  ? data.description.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
+  : [];
+
+const statusLabel: Record<string, string> = {
+  upcoming: 'UPCOMING',
+  past: 'PAST',
+};
+---
+
+<Layout title={data.title} description={paragraphs[0] ?? `OPOTOで開催するイベント「${data.title}」のご案内です。`}>
+  <section class="max-w-4xl mx-auto px-6 pt-12 md:pt-16">
+    <a href="/event" class="inline-flex items-center gap-2 text-sm font-heading-en text-muted hover:text-ink transition-colors">
+      &larr; EVENT
+    </a>
+  </section>
+
+  <!-- 画像 -->
+  {images.length > 0 && (
+    <section class="max-w-4xl mx-auto px-6 mt-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+        {images.map((img) => (
+          <div class="bg-surface border border-line overflow-hidden">
+            <img src={img} alt={data.title} class="w-full h-auto" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- 本文 -->
+  <section class="max-w-4xl mx-auto px-6 py-12 md:py-16">
+    <span class="font-heading-en text-sm tracking-widest text-muted">
+      {statusLabel[data.status]}
+    </span>
+    <h1 class="font-heading-ja text-2xl md:text-3xl leading-tight tracking-tight mt-4 mb-4">
+      {data.title}
+    </h1>
+    {data.period && (
+      <p class="text-sm text-muted mb-10">{data.period}</p>
+    )}
+
+    {paragraphs.length > 0 && (
+      <div class="space-y-5 max-w-2xl mb-10">
+        {paragraphs.map((p) => (
+          <p class="text-muted leading-relaxed text-sm whitespace-pre-line">{p}</p>
+        ))}
+      </div>
+    )}
+
+    <div class="flex flex-wrap gap-3">
+      {data.applyUrl && data.status === 'upcoming' && (
+        <a
+          href={data.applyUrl}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 text-sm font-heading-en border border-ink px-6 py-3 hover:bg-surface transition-colors"
+        >
+          申込みフォームへ &rarr;
+        </a>
+      )}
+      {data.note && (
+        <a
+          href={data.note}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 text-sm font-heading-en border border-line px-6 py-3 hover:bg-surface transition-colors"
+        >
+          note でアーカイブを見る &rarr;
+        </a>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line text-center">
+    <p class="text-muted mb-6">
+      イベントへの参加やご相談は、お気軽にお問い合わせください。
+    </p>
+    <a
+      href="/contact"
+      class="inline-flex items-center gap-2 font-heading-en tracking-wide border border-line px-8 py-3 hover:bg-surface transition-colors"
+    >
+      CONTACT &rarr;
+    </a>
+  </section>
+</Layout>

@@ -35,7 +35,10 @@ const events = defineCollection({
     status: z.enum(['upcoming', 'past']).default('past'),
     period: z.string().optional(),
     image: z.string().optional(),
+    images: z.array(z.string()).optional(),
     description: z.string().optional(),
+    applyUrl: z.string().optional(),
+    note: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });

@@ -40,9 +40,9 @@ public/exhibition-images/hiraku.png
 # 差し替えで使わなくなった旧画像（ローカルには保持）
 public/exhibition-images/between.jpg
 
-# 制作中のためまだ公開しないページ
-src/pages/event.astro
-src/content/events/
+# イベント告知の元画像（サイトでは -web.jpg の軽量版を使用）
+# 元ファイルはローカルに保持し、本番には配信しない
+public/event-images/image0.jpeg
 
 # 委託販売の申込書兼契約書（公開の可否を検討中のため、本番には配信しない）
 # 公開が決まったらこの行を削除し、GALLERYページからリンクする

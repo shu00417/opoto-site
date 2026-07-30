@@ -85,7 +85,13 @@ collections:
           - { label: "開催予定", value: "upcoming" }
           - { label: "過去のイベント", value: "past" }
         default: "past"
-      - { label: "開催日時（自由記述・例: 2026年8月10日 13:00〜）", name: "period", widget: "string", required: false }
-      - { label: "メイン画像", name: "image", widget: "image", required: false }
+      - { label: "開催日時（自由記述・例: 2026.08.02 9:30〜）", name: "period", widget: "string", required: false }
+      - label: "画像（告知チラシなど・複数可）"
+        name: "images"
+        widget: "list"
+        required: false
+        field: { label: "画像", name: "image", widget: "image" }
       - { label: "説明", name: "description", widget: "text", required: false }
+      - { label: "申込みフォームのURL（入力すると詳細ページにボタンが出ます）", name: "applyUrl", widget: "string", required: false }
+      - { label: "noteアーカイブ記事のURL", name: "note", widget: "string", required: false }
       - { label: "下書き（チェックすると公開されません）", name: "draft", widget: "boolean", default: false }
