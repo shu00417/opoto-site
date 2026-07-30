@@ -4,11 +4,11 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import studioHero from '../assets/photos/studio-hero.jpg';
 
-// これまでのお仕事。1行1件。年月は必ず「2026.07」の形（月は2桁）で書く。
+// その他のお仕事。1行1件。年月は必ず「2026.07」の形（月は2桁）で書く。
 // 追加するときは行をコピーして書き換えるだけ。新しい順に自動で並ぶので、書く場所はどこでもよい。
 const workLogs = [
   { date: '2026.07', text: '布勢スプリント2026にてジャマイカ選手を撮影させていただきました。' },
-  { date: '2026.06', text: 'てとてとさんの周年写真を撮影させていただきました。' },
+  { date: '2026.06', text: '鳥取市瓦町のてとてとさんの周年写真を撮影させていただきました。' },
 ].sort((a, b) => b.date.localeCompare(a.date));
 
 const serviceGlob = import.meta.glob<{ default: ImageMetadata }>(
@@ -124,7 +124,7 @@ const flow = [
 
     {workLogs.length > 0 && (
       <div class="mt-16">
-        <h3 class="font-heading-ja text-lg mb-6">これまでのお仕事</h3>
+        <h3 class="font-heading-ja text-lg mb-6">その他のお仕事</h3>
         <dl class="divide-y divide-line border-t border-b border-line">
           {workLogs.map((log) => (
             <div class="py-4 md:flex md:gap-8">
