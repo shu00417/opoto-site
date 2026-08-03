@@ -7,6 +7,7 @@ period: "2026.06.30 - 2026.07.12"
 image: "/exhibition-images/mm_01-web.jpg"
 images:
   - "/exhibition-images/mm_01-web.jpg"
+note: "https://note.com/opoto_tottori/n/n5b62ad53416b?from=notice"
 description: |
   OPOTO企画の公募写真展「見えているもの/見えていないもの」を開催いたします。
   3名の出展者が各自の視点で解釈した作品を展示いたします。

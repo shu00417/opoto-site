@@ -1,6 +1,6 @@
 ---
 title: "夏休み企画 写真ワークショップ"
-status: "upcoming"
+status: "past"
 period: "2026.08.02 9:30〜"
 images:
   - "/event-images/summer-workshop-web.jpg"
