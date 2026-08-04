@@ -38,7 +38,10 @@ const supports = [
   { title: 'プリント', text: '写真に合う紙を一緒に選び、顔料インクで出力します。A3ノビまで対応。' },
   { title: '額縁レンタル', text: '14×17インチ・18×22インチをご用意しています。' },
   { title: 'マットカット', text: 'ご指定のサイズにてマットを加工可能です。2週間ほどお時間をいただきます。' },
-  { title: 'ブック・zineの委託販売', text: '制作されたブックやzineを、ギャラリー内で販売できます。' },
+  {
+    title: 'ブック・zineの委託販売',
+    text: '制作されたブックやzineを、ギャラリー内で販売できます。<br /><a href="/consignment-sales-agreement.pdf" target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-ink transition-colors">委託販売申し込み 兼 契約書　ダウンロード</a>',
+  },
 ];
 ---
 
@@ -116,7 +119,7 @@ const supports = [
       {supports.map((item) => (
         <div class="py-5 flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-8">
           <dt class="font-heading-ja text-ink shrink-0 md:w-64">{item.title}</dt>
-          <dd class="text-muted leading-relaxed text-sm md:text-right md:flex-1">{item.text}</dd>
+          <dd class="text-muted leading-relaxed text-sm md:text-right md:flex-1" set:html={item.text} />
         </div>
       ))}
     </dl>
