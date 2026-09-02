@@ -8,6 +8,7 @@ image: "/exhibition-images/sora_01.JPG"
 images:
   - "/exhibition-images/sora_01.JPG"
   - "/exhibition-images/sora_02.JPG"
+note: "https://note.com/opoto_tottori/n/n3565d9f2f04a?sub_rt=share_sb"
 description: |
   「空は繋がっている」をテーマに
   出展者4名によるグループ展を開催いたします。
