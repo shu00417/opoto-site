@@ -98,16 +98,16 @@ const navItems = [
   <body class="bg-base text-ink font-body antialiased">
     <div
       id="mobile-menu-backdrop"
-      class="fixed inset-0 z-40 hidden bg-ink/30 md:hidden"
+      class="fixed inset-0 z-40 hidden bg-ink/30 lg:hidden"
       aria-hidden="true"
     ></div>
 
     <header class="sticky top-0 z-50 relative border-b border-line bg-base/90 backdrop-blur-sm">
       <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-5">
-        <a href="/" class="relative z-50 flex items-center">
-          <Image src={opotoLogo} alt="Photo and Culture OPOTO" class="h-7 md:h-8 w-auto" />
+        <a href="/" class="relative z-50 flex items-center shrink-0">
+          <Image src={opotoLogo} alt="Photo and Culture OPOTO" class="h-7 lg:h-8 w-auto" />
         </a>
-        <nav class="hidden md:flex gap-8 text-sm font-heading-en tracking-wide">
+        <nav class="hidden lg:flex gap-8 text-sm font-heading-en tracking-wide">
           {navItems.map((item) => (
             <a href={item.href} class="hover:text-muted transition-colors">{item.label}</a>
           ))}
@@ -115,7 +115,7 @@ const navItems = [
         <button
           type="button"
           id="mobile-menu-toggle"
-          class="relative z-50 md:hidden flex h-10 w-10 items-center justify-center -mr-2 rounded-full hover:bg-surface transition-colors"
+          class="relative z-50 lg:hidden flex h-10 w-10 items-center justify-center -mr-2 rounded-full hover:bg-surface transition-colors"
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-label="メニューを開く"
@@ -131,7 +131,7 @@ const navItems = [
 
       <div
         id="mobile-menu"
-        class="absolute inset-x-0 top-full hidden md:hidden border-t border-line bg-base shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
+        class="absolute inset-x-0 top-full hidden lg:hidden border-t border-line bg-base shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
         aria-hidden="true"
       >
         <nav class="max-w-6xl mx-auto px-6 py-3">
