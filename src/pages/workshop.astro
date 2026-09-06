@@ -1,0 +1,199 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import workshopHero from '../assets/photos/workshop-hero.jpg';
+import workshopCard1 from '../assets/photos/workshop-card-1.jpg';
+import workshopCard2 from '../assets/photos/workshop-card-2.jpg';
+import workshopCard3 from '../assets/photos/workshop-card-3.jpg';
+
+const workshops = [
+  {
+    image: workshopCard1,
+    badge: 'BEGINNER',
+    title: 'カメラを始めるワークショップ',
+    subtitle: null,
+    duration: '所要時間120分',
+    price: '¥5,000',
+    priceNote: null,
+    target: [
+      '新しく趣味を探されている方',
+      '写真、カメラに興味はあるが、最初の一歩を踏み出せない方',
+    ],
+    features:
+      '写真家とのマンツーマンワークショップ。自分のペースで受講できるので、初心者の方におすすめです。カメラの貸出しがあるので、カメラを購入する前に撮影などを体験できるのもポイントです。もちろん、既にカメラをお持ちの方も参加いただけます。オプションでロケーションの指定をいただければ、自分の撮りたい場所で撮影も可能です！',
+    program: ['カメラの使い方（構図・設定の基礎）', 'カメラの選び方', 'フォトウォーク'],
+    notes: ['駅前エリアのフォトウォーク（スナップ）は追加費用なし', '+1,000円で市内の好きなロケーションで対応'],
+    included: null,
+  },
+  {
+    image: workshopCard2,
+    badge: 'BEGINNER +',
+    title: '初心者向けプログラム',
+    subtitle: '「写真をつくる」',
+    duration: '各回最大60分（最大3回まで）',
+    price: '¥12,000',
+    priceNote: null,
+    target: ['写真を始めたばかりの方', '写真の楽しみ方を広げたい方'],
+    features:
+      '参加者の希望する目標に向けて、柔軟にプログラムを変更できるワークショップです。例えばPモード撮影からマニュアル露出モードへのステップアップ。撮影後の現像方法、カラー・モノクロの表現の考え方を知りたい。プリントしたことがないので、そこを最終目標にしたい……などなど。3コマ分のレッスン枠を自由に使い、自分の知りたい部分にフォーカスして無駄なく、写真の楽しみ方を学べます。',
+    program: [
+      '基本機能とその役割、構図',
+      '現像を学ぶ（Adobe Lightroom）',
+      '表現について考える（初級）',
+      '実際にプリントしてみよう',
+      '組写真、展示の考え方（基礎）',
+    ],
+    notes: null,
+    included: [{ title: 'プリント', text: '2枚まで込み' }],
+  },
+  {
+    image: workshopCard3,
+    badge: 'INTERMEDIATE',
+    title: '中級者向けプログラム',
+    subtitle: '「写真を編む」',
+    duration: '各回最大90分（最大5回まで）',
+    price: '¥30,000',
+    priceNote: null,
+    target: ['写真表現を学びたい方', '展示・Book制作に興味のある方'],
+    features:
+      '実際の展示や、Zine・Book制作など形に残すことを想定したプログラムです。初級同様に参加者の目標に応じて、柔軟にプログラムを変更できます。自身のテーマを決めたい、もっと深掘りしたい方や、テーマに向けた作品制作、セレクト・構成決定のサポートをいたします。',
+    program: ['写真表現について', 'テーマの重要性を知る', 'テーマに沿った作品制作', '展示とZine/Book制作'],
+    notes: null,
+    included: [
+      { title: '展示の場合', text: '額レンタル料・DM制作費・L判テストプリント3枚' },
+      { title: 'Zine/Book制作の場合', text: '本文用プリント10枚分（A5サイズ20ページ相当）' },
+    ],
+  },
+];
+---
+
+<Layout
+  title="WORKSHOP"
+  description="OPOTOの写真ワークショップ。カメラを始めるワークショップから、写真を楽しむ初級、展示やBook制作を目指す中級まで、目的に合わせて選べる3つのワークショップです。"
+>
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+    <div>
+      <span class="font-heading-en text-sm tracking-widest text-muted">WORKSHOP</span>
+      <h1 class="font-heading-ja text-xl md:text-3xl leading-tight tracking-tight mt-4 mb-8">
+        写真を知る、楽しむ、考える。
+      </h1>
+      <p class="text-muted leading-relaxed">
+        カメラを始めたばかりの方から、展示やZine・Book制作を目指す方まで。3段階のワークショップで、自分のペースで写真と向き合う時間をご用意しています。
+      </p>
+      <p class="text-muted leading-relaxed text-sm mt-4">
+        受付は随時、おひとり〜三名様までの単位で受け付けております。
+      </p>
+    </div>
+    <div class="aspect-[4/5] overflow-hidden">
+      <Image src={workshopHero} alt="" class="w-full h-full object-cover" />
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+    <h2 class="font-heading-en text-2xl tracking-wide mb-4">PROGRAM</h2>
+    <p class="text-muted text-sm leading-relaxed mb-12">
+      「始める」「楽しむ」「編む」、目的に合わせて選べる3つのワークショップです。気になるものからお気軽にご参加ください。
+    </p>
+
+    <div class="space-y-8">
+      {workshops.map((ws) => {
+        const programLabel = `${ws.title}${ws.subtitle ?? ''}`;
+        return (
+        <div class="border border-line p-8 md:p-10">
+          <div class="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-6 md:gap-10">
+            <div class="aspect-[4/5] overflow-hidden">
+              <Image src={ws.image} alt="" class="w-full h-full object-cover" />
+            </div>
+            <div>
+              <div class="flex items-center gap-3 mb-3">
+                <span class="font-heading-en text-xs tracking-widest border border-line px-2 py-0.5 text-muted">
+                  {ws.badge}
+                </span>
+              </div>
+              <div class="flex items-baseline justify-between gap-4 mb-1">
+                <h3 class="font-heading-ja text-xl">
+                  {ws.title}
+                  {ws.subtitle && <span class="block mt-1">{ws.subtitle}</span>}
+                </h3>
+                <p class="font-heading-ja text-2xl text-ink shrink-0">{ws.price}</p>
+              </div>
+              <p class="text-xs text-muted mb-6">
+                {ws.duration}
+                {ws.priceNote && ` / ${ws.priceNote}`}
+              </p>
+
+              <dl class="mb-6">
+                <dt class="font-heading-en text-xs tracking-widest text-muted mb-2">こんな方におすすめ</dt>
+                <dd>
+                  <ul class="space-y-1 text-sm leading-relaxed">
+                    {ws.target.map((t) => (
+                      <li>・{t}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </dl>
+
+              <p class="text-muted leading-relaxed text-sm mb-6">{ws.features}</p>
+
+              <dl class="mb-6">
+                <dt class="font-heading-en text-xs tracking-widest text-muted mb-2">プログラム例</dt>
+                <dd>
+                  <ul class="space-y-1 text-sm leading-relaxed">
+                    {ws.program.map((p) => (
+                      <li>・{p}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </dl>
+
+              {ws.included && (
+                <dl class="mb-6">
+                  <dt class="font-heading-en text-xs tracking-widest text-muted mb-2">費用に含まれるもの</dt>
+                  <dd class="space-y-2">
+                    {ws.included.map((item) => (
+                      <div class="text-sm">
+                        <span class="text-ink">{item.title}</span>
+                        <span class="text-muted">　{item.text}</span>
+                      </div>
+                    ))}
+                  </dd>
+                </dl>
+              )}
+
+              {ws.notes && (
+                <ul class="space-y-1 text-xs text-muted leading-relaxed mb-6">
+                  {ws.notes.map((note) => (
+                    <li>※{note}</li>
+                  ))}
+                </ul>
+              )}
+
+              <div class="flex justify-end">
+                <a
+                  href={`/contact?program=${encodeURIComponent(programLabel)}`}
+                  class="inline-flex items-center gap-2 text-sm border border-line px-6 py-2.5 hover:bg-surface transition-colors"
+                >
+                  お申し込みはこちら &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line text-center">
+    <p class="text-muted mb-6" set:html={'各ワークショップのご質問は、<a href="https://www.instagram.com/opoto_gallery/" target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-ink transition-colors">Instagram(Gallery)</a>のDM、もしくはCONTACTページよりお気軽にお問い合わせください。'} />
+    <a
+      href="/contact?category=workshop"
+      class="inline-flex items-center gap-2 font-heading-en tracking-wide border border-line px-8 py-3 hover:bg-surface transition-colors"
+    >
+      CONTACT &rarr;
+    </a>
+  </section>
+</Layout>

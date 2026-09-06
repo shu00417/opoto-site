@@ -18,6 +18,7 @@ import Layout from '../layouts/Layout.astro';
   <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
     <form method="POST" action="https://formspree.io/f/mbdevnrg" class="max-w-xl space-y-8">
       <input type="hidden" name="_next" value="https://opoto.jp/thanks" />
+      <input type="hidden" name="_subject" id="subject-field" value="" />
 
       <div>
         <label for="name" class="block font-heading-en text-sm tracking-wide text-muted mb-2">NAME</label>
@@ -50,6 +51,7 @@ import Layout from '../layouts/Layout.astro';
         >
           <option>STUDIO(撮影について)</option>
           <option>GALLERY(ギャラリーについて)</option>
+          <option>WORKSHOP(ワークショップについて)</option>
           <option>その他</option>
         </select>
       </div>
@@ -77,6 +79,27 @@ import Layout from '../layouts/Layout.astro';
 
 <script>
   window.addEventListener('pageshow', () => {
-    (document.querySelector('form') as HTMLFormElement)?.reset();
+    const form = document.querySelector('form') as HTMLFormElement;
+    if (!form) return;
+    form.reset();
+
+    const params = new URLSearchParams(window.location.search);
+    const program = params.get('program');
+    const category = form.querySelector<HTMLSelectElement>('#category');
+
+    if (program) {
+      const subjectField = form.querySelector<HTMLInputElement>('#subject-field');
+      const message = form.querySelector<HTMLTextAreaElement>('#message');
+      if (category) category.value = 'WORKSHOP(ワークショップについて)';
+      if (subjectField) subjectField.value = `${program} お申込み`;
+      if (message) {
+        message.value = `【お申込みプログラム】${program}\n\n参加人数：\n参加希望日 第一希望：\n参加希望日 第二希望：\n参加希望日 第三希望：\n`;
+      }
+      return;
+    }
+
+    if (params.get('category') === 'workshop' && category) {
+      category.value = 'WORKSHOP(ワークショップについて)';
+    }
   });
 </script>
