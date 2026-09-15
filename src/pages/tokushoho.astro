@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const items = [
+  { title: '販売事業者', value: '吉田修治' },
+  { title: '屋号', value: 'Photo and Culture OPOTO' },
+  { title: '所在地', value: '〒680-0036　鳥取県鳥取市川端1丁目119　裏側入口2階' },
+  { title: '電話番号', value: 'ご請求いただき次第、遅滞なく開示いたします（下記メールアドレスまでご連絡ください）' },
+  { title: 'メールアドレス', value: 'opoto.tottori@gmail.com', href: 'mailto:opoto.tottori@gmail.com' },
+  { title: '運営統括責任者', value: '吉田修治' },
+  { title: '販売価格', value: '各サービスページ（STUDIO等）に記載、または個別お見積り' },
+  {
+    title: '商品代金以外の必要料金',
+    value: '振込手数料はお客様のご負担となります。撮影場所により入場料・撮影許可料が必要な場合はお客様のご負担となります。',
+  },
+  { title: 'お支払い方法', value: '店頭支払い、または銀行振込（前払い）' },
+  { title: 'お支払い時期', value: '撮影日程確定前にお支払いいただきます（内金対応可）' },
+  {
+    title: '商品の引渡し時期',
+    value: '撮影データは撮影日から基本2週間以内（繁忙期は1ヶ月程度）にお渡しいたします。',
+  },
+  {
+    title: 'キャンセル・返品について',
+    value:
+      '天候不順・ご家族の体調不良の場合のみ無料延期。お客様都合によるキャンセルは、撮影1ヶ月前〜1週間前で撮影料金の50%、撮影1週間前〜当日で撮影料金の100%を申し受けます。詳細は<a href="/opoto-photo-service-terms.pdf" target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-ink transition-colors">撮影サービス利用規約</a>をご確認ください。',
+  },
+];
+---
+
+<Layout title="LEGAL NOTICE" description="Photo and Culture OPOTOの特定商取引法に基づく表記です。">
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <span class="font-heading-en text-sm tracking-widest text-muted">LEGAL NOTICE</span>
+    <h1 class="font-heading-ja text-xl md:text-3xl leading-tight tracking-tight mt-4 mb-8">
+      特定商取引法に基づく表記
+    </h1>
+  </section>
+
+  <!-- 本文 -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+    <dl class="divide-y divide-line border-t border-b border-line">
+      {items.map((item) => (
+        <div class="py-5 flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-8">
+          <dt class="font-heading-ja text-ink shrink-0 md:w-64">{item.title}</dt>
+          {item.href ? (
+            <dd class="text-sm md:text-right md:flex-1">
+              <a href={item.href} class="hover:text-muted transition-colors">{item.value}</a>
+            </dd>
+          ) : (
+            <dd class="text-sm text-muted leading-relaxed md:text-right md:flex-1" set:html={item.value} />
+          )}
+        </div>
+      ))}
+    </dl>
+  </section>
+</Layout>

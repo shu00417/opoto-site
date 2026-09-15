@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const sections = [
+  {
+    title: '1. 取得する個人情報',
+    body: [
+      'お問い合わせフォーム・ワークショップお申込みフォームでは、お名前・メールアドレス・お問い合わせ内容を取得します。',
+      '撮影サービスのご予約時には、お名前・ご住所・電話番号・ご家族に関する情報等、撮影のご案内・実施に必要な情報を取得します。',
+      'ギャラリーご利用申込時には、利用申込書にご記入いただいた情報を取得します。',
+    ],
+  },
+  {
+    title: '2. 利用目的',
+    body: [
+      'お問い合わせへの対応のため。',
+      '撮影サービス・ギャラリーのご予約確定、日程調整等のご連絡、サービス提供のため。',
+      '当店サービスの改善・向上のための分析のため。',
+    ],
+  },
+  {
+    title: '3. 第三者提供',
+    body: [
+      '法令に基づく場合を除き、ご本人の同意なく取得した個人情報を第三者に提供することはありません。',
+    ],
+  },
+  {
+    title: '4. アクセス解析ツールについて',
+    body: [
+      '当サイトでは、サイトの利用状況を把握するためGoogleアナリティクスを利用しています。これによりCookieを使用してデータの収集を行いますが、氏名など個人を特定する情報は含まれません。この機能はCookieを無効にすることで収集を拒否できます。詳しくはGoogleアナリティクスの利用規約・プライバシーポリシーをご確認ください。',
+    ],
+  },
+  {
+    title: '5. 個人情報の管理',
+    body: [
+      '取得した個人情報は、適切な管理のもと、漏洩・滅失・毀損等の防止に努めます。撮影サービスにおける個人情報の取り扱いの詳細は「撮影サービス利用規約」もあわせてご確認ください。',
+    ],
+  },
+  {
+    title: '6. 開示・訂正・削除等のご請求',
+    body: [
+      'ご自身の個人情報の開示、訂正、削除等をご希望の場合は、下記お問い合わせ窓口までご連絡ください。',
+    ],
+  },
+  {
+    title: '7. プライバシーポリシーの改定',
+    body: [
+      '本ポリシーの内容は、法令の変更や運用状況等に応じて、予告なく変更することがあります。',
+    ],
+  },
+];
+---
+
+<Layout title="PRIVACY POLICY" description="Photo and Culture OPOTOのプライバシーポリシーです。取得する個人情報の範囲や利用目的についてご案内しています。">
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <span class="font-heading-en text-sm tracking-widest text-muted">PRIVACY POLICY</span>
+    <h1 class="font-heading-ja text-xl md:text-3xl leading-tight tracking-tight mt-4 mb-8">
+      プライバシーポリシー
+    </h1>
+    <p class="text-muted leading-relaxed">
+      制定日: 2026年9月15日<br />
+      Photo and Culture OPOTO（運営者：吉田修治、以下「当店」）は、お客様の個人情報を以下の方針に基づき適切に取り扱います。
+    </p>
+  </section>
+
+  <!-- 本文 -->
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+    <div class="space-y-12 max-w-3xl">
+      {sections.map((section) => (
+        <div>
+          <h2 class="font-heading-ja text-lg mb-4">{section.title}</h2>
+          {section.body.length > 1 ? (
+            <ul class="space-y-2">
+              {section.body.map((line) => (
+                <li class="flex items-start gap-3 text-sm text-muted leading-relaxed">
+                  <span class="font-heading-en text-muted">―</span>
+                  <span set:html={line} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="text-sm text-muted leading-relaxed" set:html={section.body[0]} />
+          )}
+        </div>
+      ))}
+    </div>
+
+    <div class="max-w-3xl mt-16 pt-10 border-t-[0.5px] border-line">
+      <p class="font-heading-en text-xs tracking-widest text-muted mb-4">お問い合わせ窓口</p>
+      <p class="text-sm leading-relaxed">
+        Photo and Culture OPOTO<br />
+        <a href="mailto:opoto.tottori@gmail.com" class="underline underline-offset-2 hover:text-muted transition-colors">opoto.tottori@gmail.com</a>
+      </p>
+    </div>
+  </section>
+</Layout>
