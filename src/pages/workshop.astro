@@ -5,6 +5,8 @@ import workshopHero from '../assets/photos/workshop-hero.jpg';
 import workshopCard1 from '../assets/photos/workshop-card-1.jpg';
 import workshopCard2 from '../assets/photos/workshop-card-2.jpg';
 import workshopCard3 from '../assets/photos/workshop-card-3.jpg';
+import workshopCard4 from '../assets/photos/workshop-card-4.jpg';
+import workshopCard5 from '../assets/photos/workshop-card-5.jpg';
 
 const workshops = [
   {
@@ -64,6 +66,44 @@ const workshops = [
       { title: 'Zine/Book制作の場合', text: '本文用プリント10枚分（A5サイズ20ページ相当）' },
     ],
   },
+  {
+    image: workshopCard4,
+    badge: 'STANDARD',
+    title: '手作り写真集制作ワークショップ',
+    subtitle: '「スタンダードプラン」',
+    duration: '所要時間120分',
+    price: '¥4,000〜',
+    priceNote: null,
+    target: ['手作りの写真集を制作してみたい方', '和綴製本を体験してみたい方'],
+    features:
+      'あらかじめ写真のセレクトと製本時の並びまで考えてきていただきます。OPOTOでレイアウト決めから印刷、製本までを一緒に行います。表紙・本文などをサンプルを確認しながら制作していきますので、オリジナルの一冊を作るのにおすすめのワークショップです。',
+    programHeading: '事前準備',
+    program: ['写真のセレクト', '並び順の検討'],
+    notes: [
+      '参加費は写真集のページ数、紙の種類などによって変動いたします。',
+      '4,000円のプランではA6サイズ相当、写真20枚程度のボリュームとなります。',
+    ],
+    included: null,
+  },
+  {
+    image: workshopCard5,
+    badge: 'SUPPORT',
+    title: '手作り写真集制作ワークショップ',
+    subtitle: '「OPOTO制作サポートプラン」',
+    duration: '所要時間180分',
+    price: '¥10,000〜',
+    priceNote: null,
+    target: ['OPOTOのサポートを受けながら、拘りの写真集を制作したい方', '制作に客観的な意見を取り入れたい方'],
+    features:
+      '写真集のテーマに合う写真のセレクト、並び順などをOPOTOスタッフも一緒に考えて制作するプランです。テーマを持った写真集などの制作におすすめのプランで、表紙・本文などをサンプルを確認しながら制作していきますので、オリジナルの一冊を作るのにおすすめのワークショップです。',
+    programHeading: '事前準備',
+    program: ['表現したいテーマの検討', '写真のセレクト（上記テーマのイメージで50枚程度まで粗セレクトしてください）'],
+    notes: [
+      '参加費は写真集のページ数、紙の種類などによって変動いたします。',
+      '10,000円のプランではA6サイズ相当、写真20枚程度のボリュームとなります。',
+    ],
+    included: null,
+  },
 ];
 ---
 
@@ -103,8 +143,8 @@ const workshops = [
         return (
         <div class="border border-line p-8 md:p-10">
           <div class="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-6 md:gap-10">
-            <div class="aspect-[4/5] overflow-hidden">
-              <Image src={ws.image} alt="" class="w-full h-full object-cover" />
+            <div class="aspect-[4/5] overflow-hidden bg-surface">
+              {ws.image && <Image src={ws.image} alt="" class="w-full h-full object-cover" />}
             </div>
             <div>
               <div class="flex items-center gap-3 mb-3">
@@ -138,7 +178,7 @@ const workshops = [
               <p class="text-muted leading-relaxed text-sm mb-6">{ws.features}</p>
 
               <dl class="mb-6">
-                <dt class="font-heading-en text-xs tracking-widest text-muted mb-2">プログラム例</dt>
+                <dt class="font-heading-en text-xs tracking-widest text-muted mb-2">{ws.programHeading ?? 'プログラム例'}</dt>
                 <dd>
                   <ul class="space-y-1 text-sm leading-relaxed">
                     {ws.program.map((p) => (
