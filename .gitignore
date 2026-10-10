@@ -44,6 +44,9 @@ public/exhibition-images/between.jpg
 # イベント告知の元画像（サイトでは -web.jpg の軽量版を使用）
 # 元ファイルはローカルに保持し、本番には配信しない
 public/event-images/image0.jpeg
+public/event-images/1.jpg
+public/event-images/2.jpg
+public/event-images/3.jpg
 
 # Claude Code のローカル設定（他プロジェクトとの共有シンボリックリンク）
 .claude

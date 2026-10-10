@@ -1,12 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import workshopHero from '../assets/photos/workshop-hero.jpg';
 import workshopCard1 from '../assets/photos/workshop-card-1.jpg';
 import workshopCard2 from '../assets/photos/workshop-card-2.jpg';
 import workshopCard3 from '../assets/photos/workshop-card-3.jpg';
 import workshopCard4 from '../assets/photos/workshop-card-4.jpg';
 import workshopCard5 from '../assets/photos/workshop-card-5.jpg';
+
+const allEvents = await getCollection('events', ({ data }) => !data.draft);
+const upcomingEvents = allEvents
+  .filter((e) => e.data.status === 'upcoming')
+  .sort((a, b) => a.id.localeCompare(b.id));
+const coverOf = (ev: (typeof allEvents)[number]) => ev.data.image ?? ev.data.images?.[0];
+const excerptOf = (ev: (typeof allEvents)[number]) =>
+  ev.data.description?.split(/\n\s*\n/)[0]?.trim();
 
 const workshops = [
   {
@@ -115,8 +124,8 @@ const workshops = [
 ---
 
 <Layout
-  title="WORKSHOP"
-  description="OPOTOの写真ワークショップ。カメラを始めるワークショップから、写真を楽しむ初級、展示やBook制作を目指す中級まで、目的に合わせて選べる3つのワークショップです。"
+  title="OPOTO：鳥取の写真ワークショップ・イベント情報"
+  description="鳥取市のフォトスタジオ＆ギャラリーOPOTOの写真ワークショップ・イベント情報。カメラを始める方から、手作り写真集・展示づくりまで。募集中のイベントと各プログラムの内容・料金をご案内します。"
 >
   <!-- Hero -->
   <section class="max-w-6xl mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
@@ -136,6 +145,41 @@ const workshops = [
       <Image src={workshopHero} alt="" class="w-full h-full object-cover" />
     </div>
   </section>
+
+  <!-- 募集中のEVENT・WORKSHOP -->
+  {upcomingEvents.length > 0 && (
+  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+    <h2 class="font-heading-ja text-2xl tracking-wide mb-10">募集中のEVENT・WORKSHOP</h2>
+      <div class="space-y-16">
+        {upcomingEvents.map((ev) => (
+          <article class="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+            <a href={`/event/${ev.id}`} class="block bg-surface border border-line overflow-hidden max-w-[280px] md:max-w-[320px]">
+              {coverOf(ev) ? (
+                <img src={coverOf(ev)} alt={ev.data.title} class="w-full h-auto" loading="lazy" />
+              ) : (
+                <div class="aspect-[4/3] w-full flex items-center justify-center text-muted text-sm">
+                  準備中
+                </div>
+              )}
+            </a>
+            <div>
+              <span class="font-heading-en text-xs tracking-widest text-muted">UPCOMING</span>
+              <h3 class="font-heading-ja text-2xl mt-3 mb-5">{ev.data.title}</h3>
+              {ev.data.period && (
+                <p class="text-sm text-muted mb-6">{ev.data.period}</p>
+              )}
+              {excerptOf(ev) && (
+                <p class="text-muted leading-relaxed text-sm mb-8">{excerptOf(ev)}</p>
+              )}
+              <a href={`/event/${ev.id}`} class="inline-flex items-center gap-2 text-sm hover:gap-3 transition-all">
+                イベントの詳細を見る &rarr;
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+  </section>
+  )}
 
   <!-- PROGRAM -->
   <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">

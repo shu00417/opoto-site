@@ -5,6 +5,18 @@
 [build.environment]
   NODE_VERSION = "22"
 
+[[redirects]]
+  from = "/event"
+  to = "/workshop"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/event/"
+  to = "/workshop"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
