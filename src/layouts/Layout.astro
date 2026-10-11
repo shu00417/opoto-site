@@ -7,9 +7,10 @@ import Lightbox from '../components/Lightbox.astro';
 interface Props {
   title: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { title, description = '鳥取市川端にあるフォトスタジオ＆ギャラリー。成人式の前撮りから家族写真まで対応するスタジオと、写真展・プリントサービスを行うギャラリーを運営しています。' } = Astro.props;
+const { title, noindex = false, description ='鳥取市川端にあるフォトスタジオ＆ギャラリー。成人式の前撮りから家族写真まで対応するスタジオと、写真展・プリントサービスを行うギャラリーを運営しています。' } = Astro.props;
 
 const pageTitle = title.includes('OPOTO') ? title : `${title} | OPOTO`;
 const canonicalURL = new URL(Astro.url.pathname, 'https://opoto.jp');
@@ -61,6 +62,7 @@ const navItems = [
     <meta name="description" content={description} />
     <title>{pageTitle}</title>
     <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex" />}
 
     <!-- OGP -->
     <meta property="og:type" content="website" />

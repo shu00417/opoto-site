@@ -5,7 +5,12 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://opoto.jp',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        page !== 'https://opoto.jp/event/' && page !== 'https://opoto.jp/thanks/',
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()]
   }
