@@ -1,6 +1,6 @@
 ---
 title: "親子で参加！写真とさんぽ"
-status: "upcoming"
+status: "past"
 period: "2026.10.24（土）10:00〜12:00　ヤマタスポーツパーク遊歩道"
 images:
   - "/event-images/photo-family-day-web.jpg"

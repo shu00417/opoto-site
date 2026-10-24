@@ -1,6 +1,6 @@
 ---
 title: "カメラを始めるワークショップ at 青島"
-status: "upcoming"
+status: "past"
 period: "2026.10.17（土）10:00〜12:00　青島"
 images:
   - "/event-images/aoshima-photo-walk-web.jpg"
