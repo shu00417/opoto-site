@@ -83,6 +83,20 @@ const flow = [
       <p class="text-muted leading-relaxed">
         成人式の前撮りから家族写真まで。一人ひとりの「今」を、丁寧な対話と光を活かした撮影で残します。スタジオでもロケーションでも、あなたらしい一枚を。
       </p>
+      <div class="flex flex-wrap gap-3 mt-8">
+        <a
+          href="#menu"
+          class="inline-flex items-center gap-2 text-sm border border-line px-6 py-2.5 hover:bg-surface transition-colors"
+        >
+          料金・プランを見る &darr;
+        </a>
+        <a
+          href="/contact?category=studio"
+          class="inline-flex items-center gap-2 text-sm border border-ink px-6 py-2.5 hover:bg-surface transition-colors"
+        >
+          ご相談・ご予約はこちら &rarr;
+        </a>
+      </div>
     </div>
     <div class="aspect-[4/5] overflow-hidden">
       <Image src={studioHero} alt="" class="w-full h-full object-cover" />
@@ -141,7 +155,7 @@ const flow = [
   </section>
 
   <!-- MENU -->
-  <section class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line">
+  <section id="menu" class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line scroll-mt-24">
     <h2 class="font-heading-en text-2xl tracking-wide mb-10">MENU</h2>
 
     <!-- 振袖撮影パック（フィーチャード） -->
@@ -159,6 +173,14 @@ const flow = [
           <p class="text-sm text-muted">50カット〜 / スタジオ+ロケーション</p>
           <p class="text-xs text-muted mt-1">ヘアメイク&着付け・美容師同行・補正・プリント込み</p>
         </div>
+      </div>
+      <div class="flex justify-end mt-6">
+        <a
+          href={`/contact?category=studio&program=${encodeURIComponent('振袖撮影パック（STUDIO）')}`}
+          class="inline-flex items-center gap-2 text-sm border border-line px-6 py-2.5 hover:bg-surface transition-colors"
+        >
+          このプランで相談する &rarr;
+        </a>
       </div>
     </div>
 
@@ -178,6 +200,14 @@ const flow = [
                 <li class="text-sm text-muted">{c}</li>
               ))}
             </ul>
+          </div>
+          <div class="flex justify-end mt-6">
+            <a
+              href={`/contact?category=studio&program=${encodeURIComponent(`${plan.title}（STUDIO）`)}`}
+              class="inline-flex items-center gap-2 text-sm border border-line px-6 py-2.5 hover:bg-surface transition-colors"
+            >
+              このプランで相談する &rarr;
+            </a>
           </div>
         </div>
       ))}

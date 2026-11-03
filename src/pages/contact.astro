@@ -87,18 +87,30 @@ import Layout from '../layouts/Layout.astro';
     const program = params.get('program');
     const category = form.querySelector<HTMLSelectElement>('#category');
 
+    const isStudio = params.get('category') === 'studio';
+
     if (program) {
       const subjectField = form.querySelector<HTMLInputElement>('#subject-field');
       const message = form.querySelector<HTMLTextAreaElement>('#message');
-      if (category) category.value = 'WORKSHOP(ワークショップについて)';
-      if (subjectField) subjectField.value = `${program} お申込み`;
-      if (message) {
-        message.value = `【お申込みプログラム】${program}\n\n参加人数：\n参加希望日 第一希望：\n参加希望日 第二希望：\n参加希望日 第三希望：\n`;
+      if (isStudio) {
+        if (category) category.value = 'STUDIO(撮影について)';
+        if (subjectField) subjectField.value = `${program} ご相談`;
+        if (message) {
+          message.value = `【ご相談プラン】${program}\n\n撮影のご希望日 第一希望：\n撮影のご希望日 第二希望：\n撮影のご希望日 第三希望：\nご要望・ご質問：\n`;
+        }
+      } else {
+        if (category) category.value = 'WORKSHOP(ワークショップについて)';
+        if (subjectField) subjectField.value = `${program} お申込み`;
+        if (message) {
+          message.value = `【お申込みプログラム】${program}\n\n参加人数：\n参加希望日 第一希望：\n参加希望日 第二希望：\n参加希望日 第三希望：\n`;
+        }
       }
       return;
     }
 
-    if (params.get('category') === 'workshop' && category) {
+    if (isStudio && category) {
+      category.value = 'STUDIO(撮影について)';
+    } else if (params.get('category') === 'workshop' && category) {
       category.value = 'WORKSHOP(ワークショップについて)';
     }
   });
