@@ -132,9 +132,34 @@ const flow = [
       ))}
     </div>
     <script>
+      const SHOW = 8;
+      const STORAGE_KEY = 'opoto-studio-works-last';
       const items = Array.from(document.querySelectorAll<HTMLElement>('[data-studio-works-item]'));
-      const shuffled = items.sort(() => Math.random() - 0.5);
-      shuffled.slice(0, 8).forEach((el) => el.classList.remove('hidden'));
+      const keyOf = (el: HTMLElement) => el.dataset.image ?? '';
+
+      const shuffle = <T,>(list: T[]) => {
+        const a = [...list];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      };
+
+      let previous: string[] = [];
+      try {
+        previous = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
+      } catch {}
+
+      const fresh = shuffle(items.filter((el) => !previous.includes(keyOf(el))));
+      const repeats = shuffle(items.filter((el) => previous.includes(keyOf(el))));
+      const picked = [...fresh, ...repeats].slice(0, SHOW);
+
+      picked.forEach((el) => el.classList.remove('hidden'));
+
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(picked.map(keyOf)));
+      } catch {}
     </script>
 
     {workLogs.length > 0 && (
