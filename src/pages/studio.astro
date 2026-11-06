@@ -53,6 +53,11 @@ const options = [
   { title: 'ロケーション出張料', price: '+¥5,500〜' },
   { title: '補正（美肌・糸クズ取りなど）', price: '+¥15,000 / 30枚' },
   { title: 'プリント各種', price: '+¥1,500〜 / 1枚' },
+  {
+    title: '手製和綴じアルバム（A5サイズ・12ページ）',
+    price: '+¥7,000〜',
+    note: 'サイズ・ページ数によって料金は変動いたします。',
+  },
 ];
 
 const priceNotes = [
@@ -255,9 +260,12 @@ const flow = [
         <h3 class="font-heading-en text-sm tracking-widest text-muted mb-4">OPTION</h3>
         <dl class="divide-y divide-line border-t border-b border-line">
           {options.map((item) => (
-            <div class="py-3 flex items-baseline justify-between gap-4">
-              <dt class="font-heading-ja text-sm">{item.title}</dt>
-              <dd class="font-heading-ja text-sm text-ink shrink-0">{item.price}</dd>
+            <div class="py-3">
+              <div class="flex items-baseline justify-between gap-4">
+                <dt class="font-heading-ja text-sm">{item.title}</dt>
+                <dd class="font-heading-ja text-sm text-ink shrink-0">{item.price}</dd>
+              </div>
+              {item.note && <p class="text-xs text-muted leading-relaxed mt-1">※{item.note}</p>}
             </div>
           ))}
         </dl>
