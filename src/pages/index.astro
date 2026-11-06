@@ -1,21 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
 import topBand1 from '../assets/photos/slide-1.jpg';
 import topBand2 from '../assets/photos/slide-2.jpg';
 import topBand3 from '../assets/photos/slide-3.jpg';
 import topBand4 from '../assets/photos/slide-4.jpg';
 import studioCard from '../assets/photos/studio-card.jpg';
 import galleryCard from '../assets/photos/gallery-card.jpg';
+import { getCollection } from 'astro:content';
+import { workItems } from '../data/works';
 
-const worksGlob = import.meta.glob<{ default: ImageMetadata }>(
-  '../assets/photos/service_work/**',
-  { eager: true }
-);
-const worksImages = Object.entries(worksGlob)
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([, m]) => m.default);
+// 開催中 → NEXT → UPCOMING の順（同じ状態なら会期順）で先頭の1件を、TOPの「CURRENT EXHIBITION」に出す。該当がなければ欄ごと非表示。
+const exhibitionOrder: Record<string, number> = { current: 0, next: 1, upcoming: 2 };
+const exhibitionLabel: Record<string, string> = { current: '開催中', next: 'NEXT', upcoming: 'UPCOMING' };
+const featuredExhibition = (await getCollection('exhibitions', ({ data }) => !data.draft))
+  .filter((e) => e.data.status !== 'past')
+  .sort((a, b) => {
+    const diff = exhibitionOrder[a.data.status] - exhibitionOrder[b.data.status];
+    return diff !== 0 ? diff : a.id.localeCompare(b.id);
+  })[0];
+const featuredCover = featuredExhibition?.data.image ?? featuredExhibition?.data.images?.[0];
+
 ---
 
 <Layout title="Photo and Culture OPOTO">
@@ -167,6 +172,37 @@ const worksImages = Object.entries(worksGlob)
     </div>
   </section>
 
+  <!-- CURRENT EXHIBITION -->
+  {featuredExhibition && (
+    <section class="max-w-6xl mx-auto px-6 py-24 border-t-[0.5px] border-line">
+      <h2 class="font-heading-en text-2xl tracking-wide mb-8">CURRENT EXHIBITION</h2>
+      <a
+        href="/exhibitions"
+        class="group grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-8 md:gap-12 items-center"
+      >
+        <div class="bg-surface border border-line overflow-hidden max-w-[320px]">
+          {featuredCover ? (
+            <img src={featuredCover} alt={featuredExhibition.data.title} class="w-full h-auto" loading="lazy" />
+          ) : (
+            <div class="aspect-[4/3] w-full flex items-center justify-center text-muted text-sm">準備中</div>
+          )}
+        </div>
+        <div>
+          <span class="font-heading-en text-xs tracking-widest text-muted">
+            {exhibitionLabel[featuredExhibition.data.status]}
+          </span>
+          <h3 class="font-heading-ja text-2xl mt-3 mb-4">{featuredExhibition.data.title}</h3>
+          {featuredExhibition.data.period && (
+            <p class="text-sm text-muted mb-8">{featuredExhibition.data.period}</p>
+          )}
+          <span class="inline-flex items-center gap-2 text-sm font-heading-en group-hover:gap-3 transition-all">
+            VIEW MORE &rarr;
+          </span>
+        </div>
+      </a>
+    </section>
+  )}
+
   <!-- WORKS -->
   <section class="max-w-6xl mx-auto px-6 py-24 border-t-[0.5px] border-line">
     <div class="flex items-end justify-between mb-8">
@@ -175,34 +211,38 @@ const worksImages = Object.entries(worksGlob)
     </div>
     <p class="text-muted mb-8">OPOTOがこれまで関わらせていただいた、撮影の記録です。</p>
     <div id="works-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {worksImages.map((img) => (
+      {workItems.map(({ img, title, note }) => (
         <button
           type="button"
           data-works-item
           data-lightbox-trigger
           data-image={img.src}
-          data-title=""
-          data-description=""
-          aria-label="画像を拡大表示"
+          data-title={title}
+          data-description={note}
+          aria-label={title ? `${title}（画像を拡大表示）` : '画像を拡大表示'}
           class="group block w-full text-left hidden"
         >
-          <div class="aspect-[4/5] bg-surface border border-line overflow-hidden">
+          <div class="relative aspect-[4/5] bg-surface border border-line overflow-hidden">
             <Image
               src={img}
-              alt=""
+              alt={title}
               width={600}
               quality={80}
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
+            {title && (
+              <span class="pointer-events-none absolute inset-x-0 bottom-0 bg-ink/60 px-3 py-2 text-xs leading-snug text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                {title}
+              </span>
+            )}
           </div>
         </button>
       ))}
     </div>
     <script>
-      const items = Array.from(document.querySelectorAll<HTMLElement>('[data-works-item]'));
-      const shuffled = items.sort(() => Math.random() - 0.5);
-      shuffled.slice(0, 4).forEach(el => el.classList.remove('hidden'));
+      import { pickWorks } from '../scripts/pick-works';
+      pickWorks('[data-works-item]', 4, 'opoto-top-works-last');
     </script>
   </section>
 

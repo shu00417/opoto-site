@@ -1,9 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
 import studioHero from '../assets/photos/studio-hero.jpg';
-import worksCaptionData from '../data/works-captions.json';
+import { workItems } from '../data/works';
 
 // その他のお仕事。1行1件。年月は必ず「2026.07」の形（月は2桁）で書く。
 // 追加するときは行をコピーして書き換えるだけ。新しい順に自動で並ぶので、書く場所はどこでもよい。
@@ -12,21 +11,6 @@ const workLogs = [
   { date: '2026.07', text: '布勢スプリント2026にてジャマイカ選手を撮影させていただきました。' },
   { date: '2026.06', text: '鳥取市瓦町のてとてとさんの周年写真を撮影させていただきました。' },
 ].sort((a, b) => b.date.localeCompare(a.date));
-
-const serviceGlob = import.meta.glob<{ default: ImageMetadata }>(
-  '../assets/photos/service_work/**',
-  { eager: true }
-);
-// 写真ごとの「撮影の種類(title)」「ひとこと説明(note)」。キーはファイル番号（例: "032"）。空なら何も表示しない。
-const worksCaptions: Record<string, { title?: string; note?: string }> = worksCaptionData;
-
-const serviceImages = Object.entries(serviceGlob)
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([path, m]) => {
-    const key = path.split('/').pop()?.replace(/\.[^.]+$/, '') ?? '';
-    const caption = worksCaptions[key];
-    return { img: m.default, title: caption?.title ?? '', note: caption?.note ?? '' };
-  });
 
 const plans = [
   {
@@ -120,7 +104,7 @@ const flow = [
   <section id="works" class="max-w-6xl mx-auto px-6 py-20 border-t-[0.5px] border-line scroll-mt-24">
     <h2 class="font-heading-en text-2xl tracking-wide mb-8">WORKS</h2>
     <div id="studio-works-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {serviceImages.map(({ img, title, note }) => (
+      {workItems.map(({ img, title, note }) => (
         <button
           type="button"
           data-studio-works-item
@@ -150,34 +134,8 @@ const flow = [
       ))}
     </div>
     <script>
-      const SHOW = 8;
-      const STORAGE_KEY = 'opoto-studio-works-last';
-      const items = Array.from(document.querySelectorAll<HTMLElement>('[data-studio-works-item]'));
-      const keyOf = (el: HTMLElement) => el.dataset.image ?? '';
-
-      const shuffle = <T,>(list: T[]) => {
-        const a = [...list];
-        for (let i = a.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
-      };
-
-      let previous: string[] = [];
-      try {
-        previous = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
-      } catch {}
-
-      const fresh = shuffle(items.filter((el) => !previous.includes(keyOf(el))));
-      const repeats = shuffle(items.filter((el) => previous.includes(keyOf(el))));
-      const picked = [...fresh, ...repeats].slice(0, SHOW);
-
-      picked.forEach((el) => el.classList.remove('hidden'));
-
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(picked.map(keyOf)));
-      } catch {}
+      import { pickWorks } from '../scripts/pick-works';
+      pickWorks('[data-studio-works-item]', 8, 'opoto-studio-works-last');
     </script>
 
     {workLogs.length > 0 && (
