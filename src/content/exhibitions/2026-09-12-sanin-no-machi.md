@@ -2,7 +2,7 @@
 title: "私の好きな山陰の町"
 artist: "小野 直美 / wimaru / Matti peipon Korhonen"
 exhibitionType: "公募展"
-status: "next"
+status: "past"
 period: "2026.09.12 - 2026.09.20"
 image: "/exhibition-images/sanin_DM-web.jpg"
 images:
