@@ -49,7 +49,7 @@ import Layout from '../layouts/Layout.astro';
           name="category"
           class="w-full border border-line bg-base px-4 py-3 focus:outline-none focus:border-ink transition-colors"
         >
-          <option>STUDIO(撮影について)</option>
+          <option>PHOTOGRAPHY(撮影について)</option>
           <option>GALLERY(ギャラリーについて)</option>
           <option>WORKSHOP(ワークショップについて)</option>
           <option>その他</option>
@@ -93,7 +93,7 @@ import Layout from '../layouts/Layout.astro';
       const subjectField = form.querySelector<HTMLInputElement>('#subject-field');
       const message = form.querySelector<HTMLTextAreaElement>('#message');
       if (isStudio) {
-        if (category) category.value = 'STUDIO(撮影について)';
+        if (category) category.value = 'PHOTOGRAPHY(撮影について)';
         if (subjectField) subjectField.value = `${program} ご相談`;
         if (message) {
           message.value = `【ご相談プラン】${program}\n\nご要望・ご質問：\n\n\n撮影のご希望日（任意）：\n`;
@@ -109,7 +109,7 @@ import Layout from '../layouts/Layout.astro';
     }
 
     if (isStudio && category) {
-      category.value = 'STUDIO(撮影について)';
+      category.value = 'PHOTOGRAPHY(撮影について)';
     } else if (params.get('category') === 'workshop' && category) {
       category.value = 'WORKSHOP(ワークショップについて)';
     }

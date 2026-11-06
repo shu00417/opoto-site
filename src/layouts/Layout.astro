@@ -41,8 +41,8 @@ const jsonLd = {
 };
 
 const navItems = [
-  { href: '/studio', label: 'STUDIO' },
-  { href: '/gallery', label: 'GALLERY' },
+  { href: '/studio', label: 'PHOTOGRAPHY', sub: '撮影メニュー・ご依頼' },
+  { href: '/gallery', label: 'GALLERY', sub: '展示・プリント' },
   { href: '/exhibitions', label: 'EXHIBITIONS' },
   { href: '/workshop', label: 'WORKSHOP' },
   { href: '/contents', label: 'CONTENTS' },
@@ -109,9 +109,16 @@ const navItems = [
         <a href="/" class="relative z-50 flex items-center shrink-0">
           <Image src={opotoLogo} alt="Photo and Culture OPOTO" class="h-7 lg:h-8 w-auto" />
         </a>
-        <nav class="hidden lg:flex gap-8 text-sm font-heading-en tracking-wide">
+        <nav class="hidden lg:flex items-start gap-6 xl:gap-8 text-sm font-heading-en tracking-wide">
           {navItems.map((item) => (
-            <a href={item.href} class="hover:text-muted transition-colors">{item.label}</a>
+            <a href={item.href} class="hover:text-muted transition-colors">
+              {item.label}
+              {item.sub && (
+                <span class="block mt-0.5 text-[10px] leading-tight tracking-normal font-body text-muted whitespace-nowrap">
+                  {item.sub}
+                </span>
+              )}
+            </a>
           ))}
         </nav>
         <button
@@ -146,6 +153,9 @@ const navItems = [
               ]}
             >
               {item.label}
+              {item.sub && (
+                <span class="block mt-0.5 text-xs tracking-normal font-body text-muted">{item.sub}</span>
+              )}
             </a>
           ))}
         </nav>
